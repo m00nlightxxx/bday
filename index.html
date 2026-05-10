@@ -250,7 +250,7 @@
       font-size: 14px;
     }
 
-    /* LUDO GAME */
+    /* LUDO GAME - CROSS BOARD */
     .turn-box {
       margin: 14px auto 8px;
       padding: 12px 18px;
@@ -262,51 +262,65 @@
       font-size: 16px;
     }
 
-    .ludo-board {
-      display: grid;
-      grid-template-columns: repeat(9, 1fr);
-      gap: 7px;
-      margin: 24px auto;
-      max-width: 620px;
+    .dice {
+      font-size: 42px;
+      margin: 10px 0 18px;
+      animation: pulse 2.4s ease-in-out infinite;
     }
 
-    .ludo-cell {
-      aspect-ratio: 1;
-      border-radius: 15px;
-      background: rgba(255,255,255,0.48);
-      border: 1px solid rgba(255,255,255,0.8);
+    .ludo-cross {
+      width: min(82vw, 520px);
+      height: min(82vw, 520px);
+      margin: 24px auto;
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      grid-template-rows: repeat(9, 1fr);
+      gap: 5px;
+    }
+
+    .cross-cell {
+      border-radius: 13px;
+      background: rgba(255,255,255,0.46);
+      border: 1px solid rgba(255,255,255,0.82);
+      box-shadow: 0 7px 16px rgba(60, 90, 70, 0.10);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #4d684f;
-      font-size: 13px;
+      font-size: 11px;
       position: relative;
-      box-shadow: 0 8px 18px rgba(60, 90, 70, 0.10);
       overflow: hidden;
     }
 
-    .ludo-cell.start1 {
-      background: rgba(95, 127, 98, 0.25);
+    .cross-cell.empty {
+      background: transparent;
+      border: none;
+      box-shadow: none;
     }
 
-    .ludo-cell.start2 {
-      background: rgba(110, 120, 150, 0.25);
-    }
-
-    .ludo-cell.home {
-      background: rgba(255,255,255,0.7);
+    .cross-cell.center {
+      background: rgba(255,255,255,0.75);
       border: 1px solid rgba(95, 127, 98, 0.45);
       font-weight: bold;
+      color: #4d684f;
+    }
+
+    .cross-cell.start1 {
+      background: rgba(95, 127, 98, 0.28);
+    }
+
+    .cross-cell.start2 {
+      background: rgba(125, 115, 155, 0.25);
     }
 
     .ludo-piece {
       border: none;
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
-      font-size: 18px;
+      font-size: 17px;
       cursor: pointer;
-      background: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.88);
       box-shadow: 0 8px 18px rgba(50, 70, 60, 0.22);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       padding: 0;
@@ -334,7 +348,7 @@
 
     .ludo-piece:disabled {
       cursor: default;
-      opacity: 0.85;
+      opacity: 0.88;
     }
 
     .ludo-stack {
@@ -343,12 +357,6 @@
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-    }
-
-    .dice {
-      font-size: 42px;
-      margin: 10px 0 18px;
-      animation: pulse 2.4s ease-in-out infinite;
     }
 
     .game-message {
@@ -415,15 +423,21 @@
         border-radius: 18px;
       }
 
-      .ludo-board {
-        grid-template-columns: repeat(5, 1fr);
-        max-width: 360px;
+      .ludo-cross {
+        width: min(92vw, 360px);
+        height: min(92vw, 360px);
+        gap: 4px;
       }
 
       .ludo-piece {
-        width: 28px;
-        height: 28px;
-        font-size: 16px;
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+      }
+
+      .cross-cell {
+        border-radius: 9px;
+        font-size: 9px;
       }
     }
   </style>
@@ -574,8 +588,7 @@
       <h2>Birthday Ludo</h2>
 
       <p>
-        Two players, two pieces each. Roll the dice, choose a glowing piece,
-        and try to reach home first.
+        Roll the dice, choose a glowing piece, and move through the little cross board.
       </p>
 
       <div class="turn-box" id="turnBox">
@@ -588,7 +601,7 @@
         Roll dice
       </button>
 
-      <div class="ludo-board" id="ludoBoard"></div>
+      <div class="ludo-cross" id="ludoBoard"></div>
 
       <div class="note-box" id="ludoInfo">
         Roll to start. You need a 6 to bring a piece onto the board.
@@ -671,8 +684,17 @@
       showScene("message");
     });
 
-    /* LUDO GAME LOGIC */
-    const pathLength = 18;
+    /* LUDO GAME LOGIC - CROSS BOARD */
+
+    const crossPositions = [
+      [4,0], [4,1], [4,2], [4,3],
+      [3,4], [2,4], [1,4], [0,4],
+      [4,5], [4,6], [4,7], [4,8],
+      [5,4], [6,4], [7,4], [8,4],
+      [4,4]
+    ];
+
+    const pathLength = crossPositions.length - 1;
 
     let ludoCurrentPlayer = 1;
     let ludoDiceValue = null;
@@ -694,29 +716,38 @@
       const board = document.getElementById("ludoBoard");
       board.innerHTML = "";
 
-      for (let i = 0; i <= pathLength; i++) {
-        const cell = document.createElement("div");
-        cell.className = "ludo-cell";
-        cell.id = "cell-" + i;
-
-        if (i === 0) cell.classList.add("start1");
-        if (i === 9) cell.classList.add("start2");
-        if (i === pathLength) cell.classList.add("home");
-
-        cell.innerHTML = i === pathLength ? "HOME" : i;
-        board.appendChild(cell);
+      for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+          const cell = document.createElement("div");
+          cell.className = "cross-cell empty";
+          cell.id = `grid-${r}-${c}`;
+          board.appendChild(cell);
+        }
       }
+
+      crossPositions.forEach((pos, index) => {
+        const [r, c] = pos;
+        const cell = document.getElementById(`grid-${r}-${c}`);
+
+        cell.className = "cross-cell";
+        cell.id = "cell-" + index;
+
+        if (index === 0) cell.classList.add("start1");
+        if (index === 8) cell.classList.add("start2");
+        if (index === pathLength) cell.classList.add("center");
+
+        cell.textContent = index === pathLength ? "HOME" : index;
+      });
 
       renderLudoPieces();
     }
 
     function renderLudoPieces() {
-      document.querySelectorAll(".ludo-cell").forEach((cell, index) => {
-        if (index === pathLength) {
-          cell.innerHTML = "HOME";
-        } else {
-          cell.innerHTML = index;
-        }
+      crossPositions.forEach((pos, index) => {
+        const cell = document.getElementById("cell-" + index);
+        if (!cell) return;
+
+        cell.innerHTML = index === pathLength ? "HOME" : index;
       });
 
       const allPieces = [...ludoPieces[1], ...ludoPieces[2]];
@@ -736,7 +767,7 @@
         let targetCell;
 
         if (piece.position === -1) {
-          targetCell = document.getElementById(piece.player === 1 ? "cell-0" : "cell-9");
+          targetCell = document.getElementById(piece.player === 1 ? "cell-0" : "cell-8");
         } else if (piece.finished) {
           targetCell = document.getElementById("cell-" + pathLength);
         } else {
@@ -744,6 +775,7 @@
         }
 
         let stack = targetCell.querySelector(".ludo-stack");
+
         if (!stack) {
           stack = document.createElement("div");
           stack.className = "ludo-stack";
@@ -804,7 +836,7 @@
       if (!piece || !canMovePiece(piece)) return;
 
       if (piece.position === -1 && ludoDiceValue === 6) {
-        piece.position = piece.player === 1 ? 1 : 10;
+        piece.position = piece.player === 1 ? 1 : 9;
       } else {
         piece.position += ludoDiceValue;
       }
