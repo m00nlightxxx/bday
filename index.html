@@ -32,8 +32,7 @@
       content: "";
       position: fixed;
       inset: -20%;
-      background:
-        radial-gradient(circle, rgba(255,255,255,0.38) 2px, transparent 3px);
+      background: radial-gradient(circle, rgba(255,255,255,0.38) 2px, transparent 3px);
       background-size: 58px 58px;
       animation: waterMove 16s linear infinite;
       opacity: 0.45;
@@ -90,7 +89,7 @@
     }
 
     .card {
-      width: min(92vw, 780px);
+      width: min(92vw, 820px);
       padding: 38px 30px;
       border-radius: 34px;
       text-align: center;
@@ -123,7 +122,7 @@
     }
 
     p {
-      max-width: 520px;
+      max-width: 540px;
       margin: 0 auto 22px;
       font-size: 17px;
       line-height: 1.7;
@@ -156,7 +155,7 @@
       color: white;
       background: #5f7f62;
       box-shadow: 0 12px 26px rgba(60, 90, 70, 0.25);
-      transition: transform 0.25s ease, background 0.25s ease, opacity 0.25s ease;
+      transition: transform 0.25s ease, background 0.25s ease;
     }
 
     button:hover {
@@ -219,7 +218,7 @@
     .note-box {
       margin: 20px auto 0;
       padding: 18px;
-      max-width: 520px;
+      max-width: 540px;
       border-radius: 24px;
       background: rgba(255,255,255,0.45);
       border: 1px solid rgba(255,255,255,0.75);
@@ -229,7 +228,7 @@
     }
 
     .mini-list {
-      max-width: 520px;
+      max-width: 540px;
       margin: 18px auto 0;
       display: grid;
       gap: 12px;
@@ -250,7 +249,41 @@
       font-size: 14px;
     }
 
-    /* SOCK DRAWER */
+    /* Interactive cards */
+    .choice-grid {
+      max-width: 620px;
+      margin: 24px auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .choice-card {
+      min-height: 100px;
+      border: none;
+      border-radius: 24px;
+      padding: 18px 12px;
+      background: rgba(255,255,255,0.56);
+      color: #3b473b;
+      box-shadow: 0 12px 26px rgba(60, 90, 70, 0.14);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 15px;
+      transition: 0.25s ease;
+    }
+
+    .choice-card span {
+      display: block;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .choice-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.84);
+    }
+
+    /* Sock drawer */
     .drawer {
       margin: 24px auto;
       max-width: 520px;
@@ -290,7 +323,7 @@
       background: rgba(255,255,255,0.85);
     }
 
-    /* SUXHUK SNACK STOP */
+    /* Suxhuk */
     .picnic-box {
       margin: 24px auto;
       max-width: 440px;
@@ -325,19 +358,7 @@
       animation: sliceAppear 0.8s ease forwards;
     }
 
-    @keyframes sliceAppear {
-      from {
-        opacity: 0;
-        transform: translateY(12px) scale(0.95);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    /* LUDO GAME - CROSS BOARD */
+    /* Ludo */
     .turn-box {
       margin: 14px auto 8px;
       padding: 12px 18px;
@@ -416,10 +437,6 @@
       justify-content: center;
     }
 
-    .ludo-piece:hover {
-      transform: scale(1.12);
-    }
-
     .ludo-piece.available {
       outline: 3px solid rgba(95, 127, 98, 0.75);
       animation: pulse 1.4s ease-in-out infinite;
@@ -477,15 +494,13 @@
     }
 
     @keyframes fadeGameMessage {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes sliceAppear {
+      from { opacity: 0; transform: translateY(12px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     @media (max-width: 560px) {
@@ -501,6 +516,14 @@
         grid-template-columns: 1fr;
       }
 
+      .choice-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sock-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .video-wrap {
         padding: 9px;
         border-radius: 24px;
@@ -508,10 +531,6 @@
 
       video {
         border-radius: 18px;
-      }
-
-      .sock-grid {
-        grid-template-columns: repeat(2, 1fr);
       }
 
       .ludo-cross {
@@ -562,582 +581,10 @@
       <button class="main-button" onclick="startExperience()">Start</button>
 
       <div class="menu" id="menu" style="display: none;">
-        <button onclick="openVideo()">
-          <span>🎬</span>
-          play the little movie
-        </button>
-
-        <button onclick="showScene('message')">
-          <span>💌</span>
-          open the note
-        </button>
-
-        <button onclick="showScene('flowers')">
-          <span>❀</span>
-          flowers
-        </button>
-
-        <button onclick="showScene('songPage')">
-          <span>🎧</span>
-          our song
-        </button>
-
-        <button onclick="showScene('gamePage')">
-          <span>🎲</span>
-          birthday ludo
-        </button>
-
-        <button onclick="showScene('sockDrawer')">
-          <span>🧦</span>
-          sock drawer
-        </button>
-
-        <button onclick="showScene('snackStop')">
-          <span>🍴</span>
-          snack stop
-        </button>
-      </div>
-
-      <div class="signature">
-        choose what to open first
-      </div>
-    </div>
-  </section>
-
-  <!-- VIDEO PAGE -->
-  <section class="scene" id="videoScene">
-    <div class="video-wrap">
-      <video id="birthdayVideo" playsinline controls preload="metadata">
-        <source src="video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <div class="video-buttons">
-        <button class="small-button" onclick="replayVideo()">Replay video</button>
-        <button class="small-button" onclick="goHome()">Back to main page</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- MESSAGE PAGE -->
-  <section class="scene" id="message">
-    <div class="card">
-      <div class="flower">💌</div>
-      <div class="tiny-title">a tiny note</div>
-      <h2>Happy birthday</h2>
-
-      <div class="note-box">
-        I hope today feels calm, kind, and beautiful —
-        the way small things sometimes become the most special ones.
-        <br><br>
-        Gëzuar ditëlindjen, dashuri. Të dua.
-      </div>
-
-      <button class="back-button" onclick="goHome()">Back to main page</button>
-    </div>
-  </section>
-
-  <!-- FLOWERS PAGE -->
-  <section class="scene" id="flowers">
-    <div class="card">
-      <div class="flower">❀</div>
-      <div class="tiny-title">lily of the valley</div>
-      <h2>Digital flowers</h2>
-
-      <p>
-        Since I cannot give you real lily of the valley flowers today,
-        I made this small digital version instead.
-      </p>
-
-      <div class="mini-list">
-        <div class="mini-item">small white flowers</div>
-        <div class="mini-item">soft green leaves</div>
-        <div class="mini-item">a quiet mountain view</div>
-        <div class="mini-item">and a little birthday wish</div>
-      </div>
-
-      <button class="back-button" onclick="goHome()">Back to main page</button>
-    </div>
-  </section>
-
-  <!-- SONG PAGE -->
-  <section class="scene" id="songPage">
-    <div class="card">
-      <div class="flower">🎧</div>
-      <div class="tiny-title">the song</div>
-      <h2>Our song</h2>
-
-      <p>
-        I left the song here too, because it belongs in this little gift.
-      </p>
-
-      <button class="main-button" onclick="toggleMusic()" id="musicButton">
-        Play song
-      </button>
-
-      <br>
-
-      <button class="back-button" onclick="goHome()">Back to main page</button>
-    </div>
-  </section>
-
-  <!-- SOCK DRAWER PAGE -->
-  <section class="scene" id="sockDrawer">
-    <div class="card">
-      <div class="flower">🧦</div>
-      <div class="tiny-title">tiny drawer</div>
-      <h2>Open the sock drawer</h2>
-
-      <p>
-        Pick a pair. Obviously, normal socks were not invited.
-      </p>
-
-      <div class="drawer">
-        <div class="drawer-handle"></div>
-
-        <div class="sock-grid">
-          <button class="sock" onclick="sockMessage('striped')">🧦</button>
-          <button class="sock" onclick="sockMessage('star')">🌙</button>
-          <button class="sock" onclick="sockMessage('flower')">❀</button>
-          <button class="sock" onclick="sockMessage('chaos')">✨</button>
-          <button class="sock" onclick="sockMessage('lucky')">🍀</button>
-          <button class="sock" onclick="sockMessage('birthday')">🎁</button>
-        </div>
-      </div>
-
-      <div class="note-box game-message" id="sockNote"></div>
-
-      <button class="back-button" onclick="resetSockDrawer(); goHome()">Back to main page</button>
-    </div>
-  </section>
-
-  <!-- SNACK STOP PAGE -->
-  <section class="scene" id="snackStop">
-    <div class="card">
-      <div class="flower">🍴</div>
-      <div class="tiny-title">mountain snack stop</div>
-      <h2>Emergency snack break</h2>
-
-      <p>
-        Somewhere between the motorcycle ride and the flowers,
-        there had to be a snack stop.
-      </p>
-
-      <div class="picnic-box">
-        <p>
-          A tiny picnic box is waiting at the viewpoint.
-        </p>
-
-        <button class="main-button" onclick="openSnackBox()">
-          Open the picnic box
-        </button>
-
-        <div class="suxhuk-area" id="suxhukArea">
-          <div class="suxhuk" id="suxhuk">🌭</div>
-
-          <button class="small-button" onclick="cutSuxhuk()">
-            Cut with knife 🔪
-          </button>
-
-          <div class="suxhuk-slices" id="suxhukSlices">
-            🥓 🥓 🥓 🥓 🥓
-          </div>
-        </div>
-      </div>
-
-      <div class="note-box game-message" id="snackNote">
-        Suxhuk successfully unlocked.
-        <br><br>
-        Not edible, unfortunately. But it was prepared with full birthday seriousness.
-        <br><br>
-        Small reminder: I hope your year is full of good food, good days,
-        and people who remember the little things you like.
-      </div>
-
-      <button class="back-button" onclick="resetSnackStop(); goHome()">Back to main page</button>
-    </div>
-  </section>
-
-  <!-- LUDO GAME PAGE -->
-  <section class="scene" id="gamePage">
-    <div class="card">
-      <div class="flower">🎲</div>
-      <div class="tiny-title">tiny ludo</div>
-      <h2>Birthday Ludo</h2>
-
-      <p>
-        Roll the dice, choose a glowing piece, and move through the little cross board.
-      </p>
-
-      <div class="turn-box" id="turnBox">
-        Player 1's turn 🏍️
-      </div>
-
-      <div class="dice" id="dice">🎲</div>
-
-      <button class="main-button" id="rollButton" onclick="rollLudoDice()">
-        Roll dice
-      </button>
-
-      <div class="ludo-cross" id="ludoBoard"></div>
-
-      <div class="note-box" id="ludoInfo">
-        Roll to start. You need a 6 to bring a piece onto the board.
-      </div>
-
-      <div class="note-box game-message" id="ludoWinMessage">
-        You won the tiny Ludo game 🤍
-        <br><br>
-        Gëzuar ditëlindjen, dashuri.
-        <br>
-        I hope this year brings you soft days, good surprises,
-        and many reasons to smile.
-      </div>
-
-      <button class="small-button" onclick="resetLudoGame()">Restart game</button>
-      <br>
-      <button class="back-button" onclick="resetLudoGame(); goHome();">
-        Back to main page
-      </button>
-    </div>
-  </section>
-
-  <script>
-    const song = document.getElementById("song");
-    const video = document.getElementById("birthdayVideo");
-    const menu = document.getElementById("menu");
-    const musicButton = document.getElementById("musicButton");
-
-    function showScene(sceneId) {
-      document.querySelectorAll(".scene").forEach(scene => {
-        scene.classList.remove("active");
-      });
-
-      document.getElementById(sceneId).classList.add("active");
-    }
-
-    function startExperience() {
-      menu.style.display = "grid";
-
-      song.volume = 0.55;
-      song.play()
-        .then(() => {
-          musicButton.textContent = "Pause song";
-        })
-        .catch(() => {
-          musicButton.textContent = "Play song";
-        });
-    }
-
-    function openVideo() {
-      showScene("videoScene");
-
-      video.currentTime = 0;
-      video.play().catch(() => {
-        console.log("Video needs manual play.");
-      });
-    }
-
-    function replayVideo() {
-      video.currentTime = 0;
-      video.play();
-    }
-
-    function goHome() {
-      video.pause();
-      showScene("main");
-    }
-
-    function toggleMusic() {
-      if (song.paused) {
-        song.play();
-        musicButton.textContent = "Pause song";
-      } else {
-        song.pause();
-        musicButton.textContent = "Play song";
-      }
-    }
-
-    video.addEventListener("ended", () => {
-      showScene("message");
-    });
-
-    /* SOCK DRAWER LOGIC */
-    function sockMessage(type) {
-      const note = document.getElementById("sockNote");
-
-      const messages = {
-        striped: "You picked the striped socks. Very serious birthday business.",
-        star: "You picked the moon socks. For dramatic walks and mysterious thoughts.",
-        flower: "You picked the flower socks. They match the lily of the valley part.",
-        chaos: "You picked the chaotic socks. Honestly, probably the correct choice.",
-        lucky: "You picked the lucky socks. Keeping these for a very good year.",
-        birthday: "You picked the birthday socks. Officially too cute to be normal."
-      };
-
-      note.innerHTML = messages[type] + "<br><br>Small reminder: you deserve soft days and good surprises.";
-      note.style.display = "block";
-    }
-
-    function resetSockDrawer() {
-      document.getElementById("sockNote").style.display = "none";
-      document.getElementById("sockNote").innerHTML = "";
-    }
-
-    /* SUXHUK SNACK LOGIC */
-    function openSnackBox() {
-      document.getElementById("suxhukArea").style.display = "block";
-    }
-
-    function cutSuxhuk() {
-      document.getElementById("suxhuk").classList.add("cut");
-      document.getElementById("suxhukSlices").style.display = "block";
-      document.getElementById("snackNote").style.display = "block";
-    }
-
-    function resetSnackStop() {
-      document.getElementById("suxhukArea").style.display = "none";
-      document.getElementById("suxhuk").classList.remove("cut");
-      document.getElementById("suxhukSlices").style.display = "none";
-      document.getElementById("snackNote").style.display = "none";
-    }
-
-    /* LUDO GAME LOGIC - CROSS BOARD */
-    const crossPositions = [
-      [4,0], [4,1], [4,2], [4,3],
-      [3,4], [2,4], [1,4], [0,4],
-      [4,5], [4,6], [4,7], [4,8],
-      [5,4], [6,4], [7,4], [8,4],
-      [4,4]
-    ];
-
-    const pathLength = crossPositions.length - 1;
-
-    let ludoCurrentPlayer = 1;
-    let ludoDiceValue = null;
-    let ludoHasRolled = false;
-    let ludoGameOver = false;
-
-    let ludoPieces = {
-      1: [
-        { id: "p1a", player: 1, position: -1, finished: false },
-        { id: "p1b", player: 1, position: -1, finished: false }
-      ],
-      2: [
-        { id: "p2a", player: 2, position: -1, finished: false },
-        { id: "p2b", player: 2, position: -1, finished: false }
-      ]
-    };
-
-    function createLudoBoard() {
-      const board = document.getElementById("ludoBoard");
-      board.innerHTML = "";
-
-      for (let r = 0; r < 9; r++) {
-        for (let c = 0; c < 9; c++) {
-          const cell = document.createElement("div");
-          cell.className = "cross-cell empty";
-          cell.id = `grid-${r}-${c}`;
-          board.appendChild(cell);
-        }
-      }
-
-      crossPositions.forEach((pos, index) => {
-        const [r, c] = pos;
-        const cell = document.getElementById(`grid-${r}-${c}`);
-
-        cell.className = "cross-cell";
-        cell.id = "cell-" + index;
-
-        if (index === 0) cell.classList.add("start1");
-        if (index === 8) cell.classList.add("start2");
-        if (index === pathLength) cell.classList.add("center");
-
-        cell.textContent = index === pathLength ? "HOME" : index;
-      });
-
-      renderLudoPieces();
-    }
-
-    function renderLudoPieces() {
-      crossPositions.forEach((pos, index) => {
-        const cell = document.getElementById("cell-" + index);
-        if (!cell) return;
-
-        cell.innerHTML = index === pathLength ? "HOME" : index;
-      });
-
-      const allPieces = [...ludoPieces[1], ...ludoPieces[2]];
-
-      allPieces.forEach(piece => {
-        const pieceButton = document.createElement("button");
-        pieceButton.className = `ludo-piece p${piece.player}`;
-        pieceButton.textContent = piece.player === 1 ? "🏍️" : "🌙";
-        pieceButton.onclick = () => moveLudoPiece(piece.id);
-
-        if (canMovePiece(piece)) {
-          pieceButton.classList.add("available");
-        } else {
-          pieceButton.disabled = true;
-        }
-
-        let targetCell;
-
-        if (piece.position === -1) {
-          targetCell = document.getElementById(piece.player === 1 ? "cell-0" : "cell-8");
-        } else if (piece.finished) {
-          targetCell = document.getElementById("cell-" + pathLength);
-        } else {
-          targetCell = document.getElementById("cell-" + piece.position);
-        }
-
-        let stack = targetCell.querySelector(".ludo-stack");
-
-        if (!stack) {
-          stack = document.createElement("div");
-          stack.className = "ludo-stack";
-          targetCell.innerHTML = "";
-          targetCell.appendChild(stack);
-        }
-
-        stack.appendChild(pieceButton);
-      });
-    }
-
-    function rollLudoDice() {
-      if (ludoGameOver) return;
-
-      if (ludoHasRolled) {
-        updateLudoInfo("Choose one of the glowing pieces to move.");
-        return;
-      }
-
-      ludoDiceValue = Math.floor(Math.random() * 6) + 1;
-      ludoHasRolled = true;
-
-      document.getElementById("dice").textContent = "🎲 " + ludoDiceValue;
-
-      const movablePieces = ludoPieces[ludoCurrentPlayer].filter(piece => canMovePiece(piece));
-
-      if (movablePieces.length === 0) {
-        updateLudoInfo(`Player ${ludoCurrentPlayer} rolled ${ludoDiceValue}, but no piece can move.`);
-
-        setTimeout(() => {
-          switchLudoTurn();
-        }, 1200);
-      } else {
-        updateLudoInfo(`Player ${ludoCurrentPlayer} rolled ${ludoDiceValue}. Choose a glowing piece.`);
-      }
-
-      renderLudoPieces();
-    }
-
-    function canMovePiece(piece) {
-      if (!ludoHasRolled || piece.player !== ludoCurrentPlayer || piece.finished) {
-        return false;
-      }
-
-      if (piece.position === -1) {
-        return ludoDiceValue === 6;
-      }
-
-      return piece.position + ludoDiceValue <= pathLength;
-    }
-
-    function moveLudoPiece(pieceId) {
-      if (!ludoHasRolled || ludoGameOver) return;
-
-      const allPieces = [...ludoPieces[1], ...ludoPieces[2]];
-      const piece = allPieces.find(p => p.id === pieceId);
-
-      if (!piece || !canMovePiece(piece)) return;
-
-      if (piece.position === -1 && ludoDiceValue === 6) {
-        piece.position = piece.player === 1 ? 1 : 9;
-      } else {
-        piece.position += ludoDiceValue;
-      }
-
-      if (piece.position >= pathLength) {
-        piece.position = pathLength;
-        piece.finished = true;
-      }
-
-      checkLudoWinner();
-
-      if (!ludoGameOver) {
-        if (ludoDiceValue === 6) {
-          ludoHasRolled = false;
-          ludoDiceValue = null;
-          document.getElementById("dice").textContent = "🎲";
-          updateLudoInfo(`Player ${ludoCurrentPlayer} rolled a 6, so they get another turn.`);
-        } else {
-          switchLudoTurn();
-        }
-      }
-
-      renderLudoPieces();
-    }
-
-    function switchLudoTurn() {
-      ludoCurrentPlayer = ludoCurrentPlayer === 1 ? 2 : 1;
-      ludoHasRolled = false;
-      ludoDiceValue = null;
-
-      document.getElementById("dice").textContent = "🎲";
-      document.getElementById("turnBox").textContent =
-        ludoCurrentPlayer === 1 ? "Player 1's turn 🏍️" : "Player 2's turn 🌙";
-
-      updateLudoInfo(`Player ${ludoCurrentPlayer}, roll the dice.`);
-      renderLudoPieces();
-    }
-
-    function checkLudoWinner() {
-      const hasWon = ludoPieces[ludoCurrentPlayer].every(piece => piece.finished);
-
-      if (hasWon) {
-        ludoGameOver = true;
-
-        document.getElementById("turnBox").textContent =
-          ludoCurrentPlayer === 1 ? "Player 1 won 🏍️" : "Player 2 won 🌙";
-
-        document.getElementById("ludoInfo").style.display = "none";
-        document.getElementById("ludoWinMessage").style.display = "block";
-      }
-    }
-
-    function updateLudoInfo(text) {
-      const info = document.getElementById("ludoInfo");
-      info.style.display = "block";
-      info.textContent = text;
-    }
-
-    function resetLudoGame() {
-      ludoCurrentPlayer = 1;
-      ludoDiceValue = null;
-      ludoHasRolled = false;
-      ludoGameOver = false;
-
-      ludoPieces = {
-        1: [
-          { id: "p1a", player: 1, position: -1, finished: false },
-          { id: "p1b", player: 1, position: -1, finished: false }
-        ],
-        2: [
-          { id: "p2a", player: 2, position: -1, finished: false },
-          { id: "p2b", player: 2, position: -1, finished: false }
-        ]
-      };
-
-      document.getElementById("dice").textContent = "🎲";
-      document.getElementById("turnBox").textContent = "Player 1's turn 🏍️";
-      document.getElementById("ludoWinMessage").style.display = "none";
-      updateLudoInfo("Roll to start. You need a 6 to bring a piece onto the board.");
-
-      createLudoBoard();
-    }
-
-    createLudoBoard();
-  </script>
-</body>
-</html>
+        <button onclick="openVideo()"><span>🎬</span>play the little movie</button>
+        <button onclick="showScene('message')"><span>💌</span>open the note</button>
+        <button onclick="showScene('flowers')"><span>❀</span>flowers</button>
+        <button onclick="showScene('songPage')"><span>🎧</span>our song</button>
+        <button onclick="showScene('gamePage')"><span>🎲</span>birthday ludo</button>
+        <button onclick="showScene('sockDrawer')"><span>🧦</span>sock drawer</button>
+        <button
