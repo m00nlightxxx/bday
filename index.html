@@ -90,7 +90,7 @@
     }
 
     .card {
-      width: min(92vw, 650px);
+      width: min(92vw, 760px);
       padding: 38px 30px;
       border-radius: 34px;
       text-align: center;
@@ -244,33 +244,105 @@
       color: #3b473b;
     }
 
-    .game-board {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-      margin: 24px auto;
-      max-width: 560px;
+    .signature {
+      margin-top: 22px;
+      color: #6b786b;
+      font-size: 14px;
     }
 
-    .tile {
+    /* LUDO GAME */
+    .turn-box {
+      margin: 14px auto 8px;
+      padding: 12px 18px;
+      width: fit-content;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.85);
+      color: #3f563f;
+      font-size: 16px;
+    }
+
+    .ludo-board {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 7px;
+      margin: 24px auto;
+      max-width: 620px;
+    }
+
+    .ludo-cell {
       aspect-ratio: 1;
-      border-radius: 16px;
+      border-radius: 15px;
       background: rgba(255,255,255,0.48);
       border: 1px solid rgba(255,255,255,0.8);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #4d684f;
-      font-size: 18px;
-      box-shadow: 0 8px 18px rgba(60, 90, 70, 0.12);
-      transition: 0.25s ease;
+      font-size: 13px;
+      position: relative;
+      box-shadow: 0 8px 18px rgba(60, 90, 70, 0.10);
+      overflow: hidden;
     }
 
-    .tile.active {
-      background: rgba(95, 127, 98, 0.92);
-      color: white;
-      transform: scale(1.08);
-      box-shadow: 0 12px 26px rgba(60, 90, 70, 0.28);
+    .ludo-cell.start1 {
+      background: rgba(95, 127, 98, 0.25);
+    }
+
+    .ludo-cell.start2 {
+      background: rgba(110, 120, 150, 0.25);
+    }
+
+    .ludo-cell.home {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(95, 127, 98, 0.45);
+      font-weight: bold;
+    }
+
+    .ludo-piece {
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 8px 18px rgba(50, 70, 60, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ludo-piece:hover {
+      transform: scale(1.12);
+    }
+
+    .ludo-piece.available {
+      outline: 3px solid rgba(95, 127, 98, 0.75);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    .ludo-piece.p1 {
+      background: #dfeee5;
+    }
+
+    .ludo-piece.p2 {
+      background: #ece8f6;
+    }
+
+    .ludo-piece:disabled {
+      cursor: default;
+      opacity: 0.85;
+    }
+
+    .ludo-stack {
+      display: flex;
+      gap: 2px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
     }
 
     .dice {
@@ -282,12 +354,6 @@
     .game-message {
       display: none;
       animation: fadeGameMessage 0.8s ease forwards;
-    }
-
-    .signature {
-      margin-top: 22px;
-      color: #6b786b;
-      font-size: 14px;
     }
 
     @keyframes waterMove {
@@ -349,8 +415,15 @@
         border-radius: 18px;
       }
 
-      .game-board {
-        grid-template-columns: repeat(4, 1fr);
+      .ludo-board {
+        grid-template-columns: repeat(5, 1fr);
+        max-width: 360px;
+      }
+
+      .ludo-piece {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
       }
     }
   </style>
@@ -406,7 +479,7 @@
 
         <button onclick="showScene('gamePage')">
           <span>🎲</span>
-          little game
+          birthday ludo
         </button>
       </div>
 
@@ -493,34 +566,36 @@
     </div>
   </section>
 
-  <!-- GAME PAGE -->
+  <!-- LUDO GAME PAGE -->
   <section class="scene" id="gamePage">
     <div class="card">
       <div class="flower">🎲</div>
-      <div class="tiny-title">a tiny game</div>
-      <h2>Roll to find the flowers</h2>
+      <div class="tiny-title">tiny ludo</div>
+      <h2>Birthday Ludo</h2>
 
       <p>
-        Roll the dice and move through the little path.
-        Reach the last square to unlock a message.
+        Two players, two pieces each. Roll the dice, choose a glowing piece,
+        and try to reach home first.
       </p>
 
-      <div class="game-board" id="gameBoard">
-        <div class="tile active">🏍️</div>
-        <div class="tile">1</div>
-        <div class="tile">2</div>
-        <div class="tile">3</div>
-        <div class="tile">4</div>
-        <div class="tile">5</div>
-        <div class="tile">❀</div>
+      <div class="turn-box" id="turnBox">
+        Player 1's turn 🏍️
       </div>
 
       <div class="dice" id="dice">🎲</div>
 
-      <button class="main-button" onclick="rollDice()">Roll dice</button>
+      <button class="main-button" id="rollButton" onclick="rollLudoDice()">
+        Roll dice
+      </button>
 
-      <div class="note-box game-message" id="gameMessage">
-        You found the flowers 🤍
+      <div class="ludo-board" id="ludoBoard"></div>
+
+      <div class="note-box" id="ludoInfo">
+        Roll to start. You need a 6 to bring a piece onto the board.
+      </div>
+
+      <div class="note-box game-message" id="ludoWinMessage">
+        You won the tiny Ludo game 🤍
         <br><br>
         Gëzuar ditëlindjen, dashuri.
         <br>
@@ -528,7 +603,9 @@
         and many reasons to smile.
       </div>
 
-      <button class="back-button" onclick="resetGame(); goHome();">
+      <button class="small-button" onclick="resetLudoGame()">Restart game</button>
+      <br>
+      <button class="back-button" onclick="resetLudoGame(); goHome();">
         Back to main page
       </button>
     </div>
@@ -539,9 +616,6 @@
     const video = document.getElementById("birthdayVideo");
     const menu = document.getElementById("menu");
     const musicButton = document.getElementById("musicButton");
-
-    let playerPosition = 0;
-    const finalPosition = 6;
 
     function showScene(sceneId) {
       document.querySelectorAll(".scene").forEach(scene => {
@@ -593,43 +667,228 @@
       }
     }
 
-    function rollDice() {
-      const dice = document.getElementById("dice");
-      const tiles = document.querySelectorAll("#gameBoard .tile");
-      const gameMessage = document.getElementById("gameMessage");
-
-      const roll = Math.floor(Math.random() * 3) + 1;
-
-      dice.textContent = "🎲 " + roll;
-
-      playerPosition += roll;
-
-      if (playerPosition >= finalPosition) {
-        playerPosition = finalPosition;
-        gameMessage.style.display = "block";
-      }
-
-      tiles.forEach(tile => tile.classList.remove("active"));
-      tiles[playerPosition].classList.add("active");
-    }
-
-    function resetGame() {
-      playerPosition = 0;
-
-      const tiles = document.querySelectorAll("#gameBoard .tile");
-      const gameMessage = document.getElementById("gameMessage");
-      const dice = document.getElementById("dice");
-
-      tiles.forEach(tile => tile.classList.remove("active"));
-      tiles[0].classList.add("active");
-
-      gameMessage.style.display = "none";
-      dice.textContent = "🎲";
-    }
-
     video.addEventListener("ended", () => {
       showScene("message");
     });
+
+    /* LUDO GAME LOGIC */
+    const pathLength = 18;
+
+    let ludoCurrentPlayer = 1;
+    let ludoDiceValue = null;
+    let ludoHasRolled = false;
+    let ludoGameOver = false;
+
+    let ludoPieces = {
+      1: [
+        { id: "p1a", player: 1, position: -1, finished: false },
+        { id: "p1b", player: 1, position: -1, finished: false }
+      ],
+      2: [
+        { id: "p2a", player: 2, position: -1, finished: false },
+        { id: "p2b", player: 2, position: -1, finished: false }
+      ]
+    };
+
+    function createLudoBoard() {
+      const board = document.getElementById("ludoBoard");
+      board.innerHTML = "";
+
+      for (let i = 0; i <= pathLength; i++) {
+        const cell = document.createElement("div");
+        cell.className = "ludo-cell";
+        cell.id = "cell-" + i;
+
+        if (i === 0) cell.classList.add("start1");
+        if (i === 9) cell.classList.add("start2");
+        if (i === pathLength) cell.classList.add("home");
+
+        cell.innerHTML = i === pathLength ? "HOME" : i;
+        board.appendChild(cell);
+      }
+
+      renderLudoPieces();
+    }
+
+    function renderLudoPieces() {
+      document.querySelectorAll(".ludo-cell").forEach((cell, index) => {
+        if (index === pathLength) {
+          cell.innerHTML = "HOME";
+        } else {
+          cell.innerHTML = index;
+        }
+      });
+
+      const allPieces = [...ludoPieces[1], ...ludoPieces[2]];
+
+      allPieces.forEach(piece => {
+        const pieceButton = document.createElement("button");
+        pieceButton.className = `ludo-piece p${piece.player}`;
+        pieceButton.textContent = piece.player === 1 ? "🏍️" : "🌙";
+        pieceButton.onclick = () => moveLudoPiece(piece.id);
+
+        if (canMovePiece(piece)) {
+          pieceButton.classList.add("available");
+        } else {
+          pieceButton.disabled = true;
+        }
+
+        let targetCell;
+
+        if (piece.position === -1) {
+          targetCell = document.getElementById(piece.player === 1 ? "cell-0" : "cell-9");
+        } else if (piece.finished) {
+          targetCell = document.getElementById("cell-" + pathLength);
+        } else {
+          targetCell = document.getElementById("cell-" + piece.position);
+        }
+
+        let stack = targetCell.querySelector(".ludo-stack");
+        if (!stack) {
+          stack = document.createElement("div");
+          stack.className = "ludo-stack";
+          targetCell.innerHTML = "";
+          targetCell.appendChild(stack);
+        }
+
+        stack.appendChild(pieceButton);
+      });
+    }
+
+    function rollLudoDice() {
+      if (ludoGameOver) return;
+
+      if (ludoHasRolled) {
+        updateLudoInfo("Choose one of the glowing pieces to move.");
+        return;
+      }
+
+      ludoDiceValue = Math.floor(Math.random() * 6) + 1;
+      ludoHasRolled = true;
+
+      document.getElementById("dice").textContent = "🎲 " + ludoDiceValue;
+
+      const movablePieces = ludoPieces[ludoCurrentPlayer].filter(piece => canMovePiece(piece));
+
+      if (movablePieces.length === 0) {
+        updateLudoInfo(`Player ${ludoCurrentPlayer} rolled ${ludoDiceValue}, but no piece can move.`);
+
+        setTimeout(() => {
+          switchLudoTurn();
+        }, 1200);
+      } else {
+        updateLudoInfo(`Player ${ludoCurrentPlayer} rolled ${ludoDiceValue}. Choose a glowing piece.`);
+      }
+
+      renderLudoPieces();
+    }
+
+    function canMovePiece(piece) {
+      if (!ludoHasRolled || piece.player !== ludoCurrentPlayer || piece.finished) {
+        return false;
+      }
+
+      if (piece.position === -1) {
+        return ludoDiceValue === 6;
+      }
+
+      return piece.position + ludoDiceValue <= pathLength;
+    }
+
+    function moveLudoPiece(pieceId) {
+      if (!ludoHasRolled || ludoGameOver) return;
+
+      const allPieces = [...ludoPieces[1], ...ludoPieces[2]];
+      const piece = allPieces.find(p => p.id === pieceId);
+
+      if (!piece || !canMovePiece(piece)) return;
+
+      if (piece.position === -1 && ludoDiceValue === 6) {
+        piece.position = piece.player === 1 ? 1 : 10;
+      } else {
+        piece.position += ludoDiceValue;
+      }
+
+      if (piece.position >= pathLength) {
+        piece.position = pathLength;
+        piece.finished = true;
+      }
+
+      checkLudoWinner();
+
+      if (!ludoGameOver) {
+        if (ludoDiceValue === 6) {
+          ludoHasRolled = false;
+          ludoDiceValue = null;
+          document.getElementById("dice").textContent = "🎲";
+          updateLudoInfo(`Player ${ludoCurrentPlayer} rolled a 6, so they get another turn.`);
+        } else {
+          switchLudoTurn();
+        }
+      }
+
+      renderLudoPieces();
+    }
+
+    function switchLudoTurn() {
+      ludoCurrentPlayer = ludoCurrentPlayer === 1 ? 2 : 1;
+      ludoHasRolled = false;
+      ludoDiceValue = null;
+
+      document.getElementById("dice").textContent = "🎲";
+      document.getElementById("turnBox").textContent =
+        ludoCurrentPlayer === 1 ? "Player 1's turn 🏍️" : "Player 2's turn 🌙";
+
+      updateLudoInfo(`Player ${ludoCurrentPlayer}, roll the dice.`);
+      renderLudoPieces();
+    }
+
+    function checkLudoWinner() {
+      const hasWon = ludoPieces[ludoCurrentPlayer].every(piece => piece.finished);
+
+      if (hasWon) {
+        ludoGameOver = true;
+
+        document.getElementById("turnBox").textContent =
+          ludoCurrentPlayer === 1 ? "Player 1 won 🏍️" : "Player 2 won 🌙";
+
+        document.getElementById("ludoInfo").style.display = "none";
+        document.getElementById("ludoWinMessage").style.display = "block";
+      }
+    }
+
+    function updateLudoInfo(text) {
+      const info = document.getElementById("ludoInfo");
+      info.style.display = "block";
+      info.textContent = text;
+    }
+
+    function resetLudoGame() {
+      ludoCurrentPlayer = 1;
+      ludoDiceValue = null;
+      ludoHasRolled = false;
+      ludoGameOver = false;
+
+      ludoPieces = {
+        1: [
+          { id: "p1a", player: 1, position: -1, finished: false },
+          { id: "p1b", player: 1, position: -1, finished: false }
+        ],
+        2: [
+          { id: "p2a", player: 2, position: -1, finished: false },
+          { id: "p2b", player: 2, position: -1, finished: false }
+        ]
+      };
+
+      document.getElementById("dice").textContent = "🎲";
+      document.getElementById("turnBox").textContent = "Player 1's turn 🏍️";
+      document.getElementById("ludoWinMessage").style.display = "none";
+      updateLudoInfo("Roll to start. You need a 6 to bring a piece onto the board.");
+
+      createLudoBoard();
+    }
+
+    createLudoBoard();
   </script>
 </body>
 </html>
