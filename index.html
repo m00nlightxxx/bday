@@ -90,7 +90,7 @@
     }
 
     .card {
-      width: min(92vw, 620px);
+      width: min(92vw, 650px);
       padding: 38px 30px;
       border-radius: 34px;
       text-align: center;
@@ -123,7 +123,7 @@
     }
 
     p {
-      max-width: 470px;
+      max-width: 500px;
       margin: 0 auto 22px;
       font-size: 17px;
       line-height: 1.7;
@@ -219,7 +219,7 @@
     .note-box {
       margin: 20px auto 0;
       padding: 18px;
-      max-width: 470px;
+      max-width: 500px;
       border-radius: 24px;
       background: rgba(255,255,255,0.45);
       border: 1px solid rgba(255,255,255,0.75);
@@ -229,7 +229,7 @@
     }
 
     .mini-list {
-      max-width: 470px;
+      max-width: 500px;
       margin: 18px auto 0;
       display: grid;
       gap: 12px;
@@ -242,6 +242,46 @@
       border: 1px solid rgba(255,255,255,0.75);
       font-size: 16px;
       color: #3b473b;
+    }
+
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin: 24px auto;
+      max-width: 560px;
+    }
+
+    .tile {
+      aspect-ratio: 1;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.48);
+      border: 1px solid rgba(255,255,255,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4d684f;
+      font-size: 18px;
+      box-shadow: 0 8px 18px rgba(60, 90, 70, 0.12);
+      transition: 0.25s ease;
+    }
+
+    .tile.active {
+      background: rgba(95, 127, 98, 0.92);
+      color: white;
+      transform: scale(1.08);
+      box-shadow: 0 12px 26px rgba(60, 90, 70, 0.28);
+    }
+
+    .dice {
+      font-size: 42px;
+      margin: 10px 0 18px;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    .game-message {
+      display: none;
+      animation: fadeGameMessage 0.8s ease forwards;
     }
 
     .signature {
@@ -275,6 +315,18 @@
       50% { transform: scale(1.4); opacity: 1; }
     }
 
+    @keyframes fadeGameMessage {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @media (max-width: 560px) {
       .card {
         padding: 34px 22px;
@@ -295,6 +347,10 @@
 
       video {
         border-radius: 18px;
+      }
+
+      .game-board {
+        grid-template-columns: repeat(4, 1fr);
       }
     }
   </style>
@@ -322,7 +378,7 @@
 
       <p>
         I made you a little place with a short story, flowers,
-        and a few small things to open.
+        a song, and a tiny game to open.
       </p>
 
       <button class="main-button" onclick="startExperience()">Start</button>
@@ -346,6 +402,11 @@
         <button onclick="showScene('songPage')">
           <span>🎧</span>
           our song
+        </button>
+
+        <button onclick="showScene('gamePage')">
+          <span>🎲</span>
+          little game
         </button>
       </div>
 
@@ -432,11 +493,55 @@
     </div>
   </section>
 
+  <!-- GAME PAGE -->
+  <section class="scene" id="gamePage">
+    <div class="card">
+      <div class="flower">🎲</div>
+      <div class="tiny-title">a tiny game</div>
+      <h2>Roll to find the flowers</h2>
+
+      <p>
+        Roll the dice and move through the little path.
+        Reach the last square to unlock a message.
+      </p>
+
+      <div class="game-board" id="gameBoard">
+        <div class="tile active">🏍️</div>
+        <div class="tile">1</div>
+        <div class="tile">2</div>
+        <div class="tile">3</div>
+        <div class="tile">4</div>
+        <div class="tile">5</div>
+        <div class="tile">❀</div>
+      </div>
+
+      <div class="dice" id="dice">🎲</div>
+
+      <button class="main-button" onclick="rollDice()">Roll dice</button>
+
+      <div class="note-box game-message" id="gameMessage">
+        You found the flowers 🤍
+        <br><br>
+        Gëzuar ditëlindjen, dashuri.
+        <br>
+        I hope this year brings you soft days, good surprises,
+        and many reasons to smile.
+      </div>
+
+      <button class="back-button" onclick="resetGame(); goHome();">
+        Back to main page
+      </button>
+    </div>
+  </section>
+
   <script>
     const song = document.getElementById("song");
     const video = document.getElementById("birthdayVideo");
     const menu = document.getElementById("menu");
     const musicButton = document.getElementById("musicButton");
+
+    let playerPosition = 0;
+    const finalPosition = 6;
 
     function showScene(sceneId) {
       document.querySelectorAll(".scene").forEach(scene => {
@@ -486,6 +591,40 @@
         song.pause();
         musicButton.textContent = "Play song";
       }
+    }
+
+    function rollDice() {
+      const dice = document.getElementById("dice");
+      const tiles = document.querySelectorAll("#gameBoard .tile");
+      const gameMessage = document.getElementById("gameMessage");
+
+      const roll = Math.floor(Math.random() * 3) + 1;
+
+      dice.textContent = "🎲 " + roll;
+
+      playerPosition += roll;
+
+      if (playerPosition >= finalPosition) {
+        playerPosition = finalPosition;
+        gameMessage.style.display = "block";
+      }
+
+      tiles.forEach(tile => tile.classList.remove("active"));
+      tiles[playerPosition].classList.add("active");
+    }
+
+    function resetGame() {
+      playerPosition = 0;
+
+      const tiles = document.querySelectorAll("#gameBoard .tile");
+      const gameMessage = document.getElementById("gameMessage");
+      const dice = document.getElementById("dice");
+
+      tiles.forEach(tile => tile.classList.remove("active"));
+      tiles[0].classList.add("active");
+
+      gameMessage.style.display = "none";
+      dice.textContent = "🎲";
     }
 
     video.addEventListener("ended", () => {
