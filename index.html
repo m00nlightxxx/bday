@@ -90,7 +90,7 @@
     }
 
     .card {
-      width: min(92vw, 760px);
+      width: min(92vw, 780px);
       padding: 38px 30px;
       border-radius: 34px;
       text-align: center;
@@ -123,7 +123,7 @@
     }
 
     p {
-      max-width: 500px;
+      max-width: 520px;
       margin: 0 auto 22px;
       font-size: 17px;
       line-height: 1.7;
@@ -219,7 +219,7 @@
     .note-box {
       margin: 20px auto 0;
       padding: 18px;
-      max-width: 500px;
+      max-width: 520px;
       border-radius: 24px;
       background: rgba(255,255,255,0.45);
       border: 1px solid rgba(255,255,255,0.75);
@@ -229,7 +229,7 @@
     }
 
     .mini-list {
-      max-width: 500px;
+      max-width: 520px;
       margin: 18px auto 0;
       display: grid;
       gap: 12px;
@@ -248,6 +248,93 @@
       margin-top: 22px;
       color: #6b786b;
       font-size: 14px;
+    }
+
+    /* SOCK DRAWER */
+    .drawer {
+      margin: 24px auto;
+      max-width: 520px;
+      padding: 18px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.42);
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .drawer-handle {
+      width: 80px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(77, 104, 79, 0.35);
+      margin: 0 auto 18px;
+    }
+
+    .sock-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .sock {
+      border: none;
+      border-radius: 22px;
+      padding: 18px 10px;
+      font-size: 30px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.62);
+      box-shadow: 0 10px 22px rgba(60, 90, 70, 0.14);
+      transition: 0.25s ease;
+    }
+
+    .sock:hover {
+      transform: translateY(-4px) rotate(-2deg);
+      background: rgba(255,255,255,0.85);
+    }
+
+    /* SUXHUK SNACK STOP */
+    .picnic-box {
+      margin: 24px auto;
+      max-width: 440px;
+      padding: 24px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.48);
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 16px 34px rgba(60, 90, 70, 0.16);
+    }
+
+    .suxhuk-area {
+      display: none;
+      margin-top: 22px;
+      animation: fadeGameMessage 0.8s ease forwards;
+    }
+
+    .suxhuk {
+      font-size: 58px;
+      margin: 16px 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .suxhuk.cut {
+      transform: rotate(-8deg) scale(0.96);
+      opacity: 0.55;
+    }
+
+    .suxhuk-slices {
+      display: none;
+      margin-top: 16px;
+      font-size: 34px;
+      animation: sliceAppear 0.8s ease forwards;
+    }
+
+    @keyframes sliceAppear {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     /* LUDO GAME - CROSS BOARD */
@@ -423,6 +510,10 @@
         border-radius: 18px;
       }
 
+      .sock-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .ludo-cross {
         width: min(92vw, 360px);
         height: min(92vw, 360px);
@@ -465,7 +556,7 @@
 
       <p>
         I made you a little place with a short story, flowers,
-        a song, and a tiny game to open.
+        a song, a tiny game, and some small things to open.
       </p>
 
       <button class="main-button" onclick="startExperience()">Start</button>
@@ -494,6 +585,16 @@
         <button onclick="showScene('gamePage')">
           <span>🎲</span>
           birthday ludo
+        </button>
+
+        <button onclick="showScene('sockDrawer')">
+          <span>🧦</span>
+          sock drawer
+        </button>
+
+        <button onclick="showScene('snackStop')">
+          <span>🍴</span>
+          snack stop
         </button>
       </div>
 
@@ -577,6 +678,83 @@
       <br>
 
       <button class="back-button" onclick="goHome()">Back to main page</button>
+    </div>
+  </section>
+
+  <!-- SOCK DRAWER PAGE -->
+  <section class="scene" id="sockDrawer">
+    <div class="card">
+      <div class="flower">🧦</div>
+      <div class="tiny-title">tiny drawer</div>
+      <h2>Open the sock drawer</h2>
+
+      <p>
+        Pick a pair. Obviously, normal socks were not invited.
+      </p>
+
+      <div class="drawer">
+        <div class="drawer-handle"></div>
+
+        <div class="sock-grid">
+          <button class="sock" onclick="sockMessage('striped')">🧦</button>
+          <button class="sock" onclick="sockMessage('star')">🌙</button>
+          <button class="sock" onclick="sockMessage('flower')">❀</button>
+          <button class="sock" onclick="sockMessage('chaos')">✨</button>
+          <button class="sock" onclick="sockMessage('lucky')">🍀</button>
+          <button class="sock" onclick="sockMessage('birthday')">🎁</button>
+        </div>
+      </div>
+
+      <div class="note-box game-message" id="sockNote"></div>
+
+      <button class="back-button" onclick="resetSockDrawer(); goHome()">Back to main page</button>
+    </div>
+  </section>
+
+  <!-- SNACK STOP PAGE -->
+  <section class="scene" id="snackStop">
+    <div class="card">
+      <div class="flower">🍴</div>
+      <div class="tiny-title">mountain snack stop</div>
+      <h2>Emergency snack break</h2>
+
+      <p>
+        Somewhere between the motorcycle ride and the flowers,
+        there had to be a snack stop.
+      </p>
+
+      <div class="picnic-box">
+        <p>
+          A tiny picnic box is waiting at the viewpoint.
+        </p>
+
+        <button class="main-button" onclick="openSnackBox()">
+          Open the picnic box
+        </button>
+
+        <div class="suxhuk-area" id="suxhukArea">
+          <div class="suxhuk" id="suxhuk">🌭</div>
+
+          <button class="small-button" onclick="cutSuxhuk()">
+            Cut with knife 🔪
+          </button>
+
+          <div class="suxhuk-slices" id="suxhukSlices">
+            🥓 🥓 🥓 🥓 🥓
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box game-message" id="snackNote">
+        Suxhuk successfully unlocked.
+        <br><br>
+        Not edible, unfortunately. But it was prepared with full birthday seriousness.
+        <br><br>
+        Small reminder: I hope your year is full of good food, good days,
+        and people who remember the little things you like.
+      </div>
+
+      <button class="back-button" onclick="resetSnackStop(); goHome()">Back to main page</button>
     </div>
   </section>
 
@@ -684,8 +862,47 @@
       showScene("message");
     });
 
-    /* LUDO GAME LOGIC - CROSS BOARD */
+    /* SOCK DRAWER LOGIC */
+    function sockMessage(type) {
+      const note = document.getElementById("sockNote");
 
+      const messages = {
+        striped: "You picked the striped socks. Very serious birthday business.",
+        star: "You picked the moon socks. For dramatic walks and mysterious thoughts.",
+        flower: "You picked the flower socks. They match the lily of the valley part.",
+        chaos: "You picked the chaotic socks. Honestly, probably the correct choice.",
+        lucky: "You picked the lucky socks. Keeping these for a very good year.",
+        birthday: "You picked the birthday socks. Officially too cute to be normal."
+      };
+
+      note.innerHTML = messages[type] + "<br><br>Small reminder: you deserve soft days and good surprises.";
+      note.style.display = "block";
+    }
+
+    function resetSockDrawer() {
+      document.getElementById("sockNote").style.display = "none";
+      document.getElementById("sockNote").innerHTML = "";
+    }
+
+    /* SUXHUK SNACK LOGIC */
+    function openSnackBox() {
+      document.getElementById("suxhukArea").style.display = "block";
+    }
+
+    function cutSuxhuk() {
+      document.getElementById("suxhuk").classList.add("cut");
+      document.getElementById("suxhukSlices").style.display = "block";
+      document.getElementById("snackNote").style.display = "block";
+    }
+
+    function resetSnackStop() {
+      document.getElementById("suxhukArea").style.display = "none";
+      document.getElementById("suxhuk").classList.remove("cut");
+      document.getElementById("suxhukSlices").style.display = "none";
+      document.getElementById("snackNote").style.display = "none";
+    }
+
+    /* LUDO GAME LOGIC - CROSS BOARD */
     const crossPositions = [
       [4,0], [4,1], [4,2], [4,3],
       [3,4], [2,4], [1,4], [0,4],
