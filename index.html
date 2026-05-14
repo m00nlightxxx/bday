@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sq">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>For you</title>
+  <title>Për ty</title>
 
   <style>
     * {
@@ -749,50 +749,50 @@
         <span class="bell b4"></span>
       </div>
 
-      <div class="tiny-title">a small birthday thing</div>
-      <h1>For you</h1>
+      <div class="tiny-title">një gjë e vogël për ditëlindje</div>
+      <h1>Për ty</h1>
 
       <p>
-        I made you a tiny place with four little things to open.
+        Bëra një vend të vogël me katër gjëra për t’i hapur.
       </p>
 
-      <button class="main-button" id="startButton" onclick="startExperience()">Start</button>
+      <button class="main-button" id="startButton" onclick="startExperience()">Hape</button>
 
       <div class="menu" id="menu" style="display:none;">
         <button onclick="showScene('songPage')">
           <span>🎧</span>
-          the song
+          kënga
         </button>
 
         <button onclick="showScene('message')">
           <span>💌</span>
-          the note
+          shënimi
         </button>
 
         <button onclick="openVideo()">
           <span>🎬</span>
-          the movie
+          filmi
         </button>
 
         <button onclick="showScene('things')">
           <span>❀</span>
-          things
+          gjërat
         </button>
       </div>
 
       <div class="signature">
-        choose what to open first
+        zgjidh çfarë do të hapësh e para
       </div>
     </div>
   </section>
 
   <section class="scene" id="songPage">
     <div class="card">
-      <div class="tiny-title">the song</div>
-      <h2>Our song</h2>
+      <div class="tiny-title">kënga</div>
+      <h2>Kënga jonë</h2>
 
       <p>
-        I left it here because some songs become a place by themselves.
+        E lashë këtu, sepse disa këngë bëhen si një vend ku kthehesh prap.
       </p>
 
       <div class="music-viz" id="musicViz">
@@ -805,34 +805,34 @@
         <div class="bar"></div>
       </div>
 
-      <button class="main-button" onclick="toggleMusic()" id="musicButton">Play song</button>
+      <button class="main-button" onclick="toggleMusic()" id="musicButton">Luaje këngën</button>
       <br>
-      <button class="back-button" onclick="goHome()">Back to main</button>
+      <button class="back-button" onclick="goHome()">Kthehu mbrapa</button>
     </div>
   </section>
 
   <section class="scene" id="message">
     <div class="card">
-      <div class="tiny-title">the note</div>
-      <h2>Happy birthday</h2>
+      <div class="tiny-title">shënimi</div>
+      <h2>Gëzuar ditëlindjen</h2>
 
       <div class="note-box">
 Gëzuar ditëlindjen, dashuri.
 
-I wanted to make something small, but not random.
-Something with the little details that feel like you:
-the flowers, the song, the motorcycle, the socks, the suxhuk,
-and all the tiny weird things that somehow make sense together.
+Desha të bëj diçka të vogël, po jo thjesht random.
+Diçka që ka brenda gjërat e vogla që më kujtojnë ty:
+lulet, këngën, motorin, çorapet, suxhukun,
+edhe ato gjërat pak të çuditshme që prap bëjnë sens.
 
-I hope this year is softer to you.
-I hope you get more reasons to laugh without forcing it.
-I hope you feel chosen, remembered, and understood —
-even in small ways.
+Shpresoj që ky vit të jetë më i butë me ty.
+Të të sjellë më shumë momente ku qesh pa e detyruar veten.
+Të ndihesh e zgjedhur, e kujtuar, dhe e kuptuar —
+edhe në mënyra të vogla.
 
 Të dua.
       </div>
 
-      <button class="back-button" onclick="goHome()">Back to main</button>
+      <button class="back-button" onclick="goHome()">Kthehu mbrapa</button>
     </div>
   </section>
 
@@ -840,23 +840,23 @@ Të dua.
     <div class="video-wrap">
       <video id="birthdayVideo" playsinline controls preload="metadata">
         <source src="video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
+        Browser-i yt nuk e hap dot videon.
       </video>
 
       <div class="video-buttons">
-        <button class="small-button" onclick="replayVideo()">Replay video</button>
-        <button class="small-button" onclick="goHome()">Back to main</button>
+        <button class="small-button" onclick="replayVideo()">Luaje prap</button>
+        <button class="small-button" onclick="goHome()">Kthehu mbrapa</button>
       </div>
     </div>
   </section>
 
   <section class="scene" id="things">
     <div class="card wide-card">
-      <div class="tiny-title">things I remembered</div>
-      <h2>Pick one</h2>
+      <div class="tiny-title">gjërat që mbajta mend</div>
+      <h2>Zgjidh një</h2>
 
       <p>
-        Small things, but not random ones.
+        Gjëra të vogla, po jo random.
       </p>
 
       <div class="things-grid">
@@ -867,7 +867,7 @@ Të dua.
 
         <button class="thing" onclick="openThing(this, 'motor')">
           <span>🏍️</span>
-          <small>motorcycle</small>
+          <small>motor</small>
         </button>
 
         <button class="thing" onclick="openThing(this, 'tattoo')">
@@ -877,7 +877,7 @@ Të dua.
 
         <button class="thing" onclick="openThing(this, 'socks')">
           <span>🧦</span>
-          <small>socks</small>
+          <small>çorape</small>
         </button>
 
         <button class="thing" onclick="openThing(this, 'ludo')">
@@ -888,7 +888,7 @@ Të dua.
 
       <div class="note-box thing-message" id="thingMessage"></div>
 
-      <button class="back-button" onclick="resetThings(); goHome()">Back to main</button>
+      <button class="back-button" onclick="resetThings(); goHome()">Kthehu mbrapa</button>
     </div>
   </section>
 
@@ -913,11 +913,11 @@ Të dua.
       song.volume = 0.55;
       song.play()
         .then(() => {
-          musicButton.textContent = "Pause song";
+          musicButton.textContent = "Ndalo këngën";
           document.getElementById("musicViz").classList.add("playing");
         })
         .catch(() => {
-          musicButton.textContent = "Play song";
+          musicButton.textContent = "Luaje këngën";
         });
     }
 
@@ -942,11 +942,11 @@ Të dua.
 
       if (song.paused) {
         song.play();
-        musicButton.textContent = "Pause song";
+        musicButton.textContent = "Ndalo këngën";
         viz.classList.add("playing");
       } else {
         song.pause();
-        musicButton.textContent = "Play song";
+        musicButton.textContent = "Luaje këngën";
         viz.classList.remove("playing");
       }
     }
@@ -966,66 +966,68 @@ Të dua.
 
       const messages = {
         suxhuk:
-`This one is for the suxhuk.
+`Kjo është për suxhukun.
 
-Because apparently even a dreamy birthday universe
-needs a very serious snack break.
+Sepse edhe në një univers pak si përrallë,
+duhet patjetër një pushim serioz për ushqim.
 
-Not elegant.
-Not poetic.
-But very important.
+Jo shumë elegante.
+Jo shumë poetike.
+Po shumë e rëndësishme.
 
-Digital suxhuk unlocked:
-sadly not edible,
-but prepared with full emotional commitment.`,
+Suxhuk digjital u hap:
+nuk hahet, fatkeqësisht,
+po është bërë me shumë seriozitet emocional.`,
 
         motor:
-`This one is for the motorcycle.
+`Kjo është për motorin.
 
-Not just because it looks cool —
-but because it feels like movement,
-like leaving noise behind,
-like taking the long road just because the view is better.
+Jo vetëm se duket cool,
+po sepse ka atë ndjesinë e lëvizjes,
+sikur po ikën pak nga zhurma,
+dhe po zgjedh rrugën më të gjatë vetëm se pamja është më e bukur.
 
-I hope this year brings you roads that feel free,
-and places that feel worth reaching.`,
+Shpresoj që ky vit të të sjellë rrugë që të ndihen të lira,
+edhe vende ku ia vlen të arrish.`,
 
         tattoo:
-`This one is for tattoos.
+`Kjo është për tattoo-t.
 
-Because some things are not just decoration.
-Some things are proof that you chose them,
-kept them,
-and made them part of you.
+Sepse disa gjëra nuk janë thjesht dekor.
+Disa gjëra janë si shenjë që ti i ke zgjedhur,
+i ke mbajtur,
+dhe i ke bërë pjesë tënden.
 
-I hope you keep becoming more yourself
-without needing to explain every detail to everyone.`,
+Shpresoj të vazhdosh të bëhesh akoma më shumë vetja jote,
+pa pasur nevojë t’ia shpjegosh çdo detaj gjithkujt.`,
 
         socks:
-`This one is for the socks.
+`Kjo është për çorapet.
 
-Different colors, weird shapes,
-probably not matching anything,
-and somehow still making perfect sense.
+Ngjyra të ndryshme,
+forma pak të çuditshme,
+ndoshta nuk përputhen me asgjë,
+po prap bëjnë sens.
 
-Small reminder:
-you do not need to be easy to understand
-to be beautiful to remember.`,
+Pak si disa njerëz:
+nuk janë të thjeshtë për t’u shpjeguar,
+po janë shumë të lehtë për t’u mbajtur mend.`,
 
         ludo:
-`This one is for Ludo.
+`Kjo është për Ludo-n.
 
-Because sometimes life is basically:
-roll the dice,
-move a little,
-get blocked,
-wait for a six,
-try again.
+Sepse ndonjëherë jeta është thjesht:
+hidhe zarin,
+ec pak,
+bllokohu,
+prit një gjashtë,
+provo prap.
 
-So here is my birthday wish:
-may your next rolls be lucky,
-may your pieces move forward,
-and may you still laugh even when the game is chaotic.`
+Kështu që urimi im është ky:
+që zarat e tu këtë vit të jenë më me fat,
+që gjërat të ecin përpara,
+dhe që edhe kur loja bëhet kaotike,
+ti prap të kesh arsye për të qeshur.`
       };
 
       messageBox.textContent = messages[type];
