@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>For you</title>
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     html, body {
       margin: 0;
@@ -30,8 +33,7 @@
       content: "";
       position: fixed;
       inset: -20%;
-      background:
-        radial-gradient(circle, rgba(255,255,255,0.22) 2px, transparent 3px);
+      background: radial-gradient(circle, rgba(255,255,255,0.22) 2px, transparent 3px);
       background-size: 60px 60px;
       opacity: 0.4;
       animation: waterMove 18s linear infinite;
@@ -58,7 +60,6 @@
       pointer-events: auto;
     }
 
-    /* MAIN NATURE SCENE */
     .main-scene {
       overflow: hidden;
     }
@@ -346,6 +347,10 @@
       animation: cardFloat 4.8s ease-in-out infinite;
     }
 
+    .flower-card-page {
+      max-width: 900px;
+    }
+
     .tiny-title {
       font-size: 13px;
       letter-spacing: 2px;
@@ -525,7 +530,7 @@
     .note-box {
       margin: 20px auto 0;
       padding: 18px;
-      max-width: 520px;
+      max-width: 560px;
       border-radius: 24px;
       background: rgba(255,255,255,0.45);
       border: 1px solid rgba(255,255,255,0.75);
@@ -534,27 +539,96 @@
       line-height: 1.7;
     }
 
-    .mini-list {
-      max-width: 520px;
-      margin: 18px auto 0;
-      display: grid;
-      gap: 12px;
-    }
-
-    .mini-item {
-      padding: 14px 16px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.46);
-      border: 1px solid rgba(255,255,255,0.75);
-      font-size: 16px;
-      color: #3b473b;
-    }
-
     .flower {
       font-size: 48px;
       margin-bottom: 12px;
       animation: pulse 3s ease-in-out infinite;
     }
+
+    /* FLOWER LETTERS */
+    .flower-letter-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 28px auto 0;
+      max-width: 760px;
+    }
+
+    .flower-letter {
+      border: none;
+      min-height: 128px;
+      padding: 18px 12px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.50);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      box-shadow: 0 14px 28px rgba(60, 90, 70, 0.14);
+      cursor: pointer;
+      font-family: inherit;
+      color: #3b473b;
+      transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .flower-letter:hover {
+      transform: translateY(-5px) scale(1.02);
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: 0 18px 36px rgba(60, 90, 70, 0.20);
+    }
+
+    .flower-letter span {
+      display: block;
+      font-size: 38px;
+      margin-bottom: 10px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .flower-letter small {
+      display: block;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #4d604e;
+    }
+
+    .flower-letter.opened {
+      background: rgba(95, 127, 98, 0.22);
+      transform: translateY(-3px);
+    }
+
+    .flower-hidden-message {
+      display: none;
+      margin-top: 28px;
+      animation: fadeUp 0.7s ease forwards;
+      white-space: pre-line;
+    }
+
+    /* SONG */
+    .music-viz {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4px;
+      height: 48px;
+      margin: 20px auto;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .music-viz.playing {
+      opacity: 1;
+    }
+
+    .bar {
+      width: 6px;
+      border-radius: 3px;
+      background: #5f7f62;
+      animation: barDance 0.8s ease-in-out infinite;
+    }
+
+    .bar:nth-child(2) { animation-delay: .1s; height: 60%; }
+    .bar:nth-child(3) { animation-delay: .2s; height: 90%; }
+    .bar:nth-child(4) { animation-delay: .05s; height: 70%; }
+    .bar:nth-child(5) { animation-delay: .15s; height: 50%; }
+    .bar:nth-child(6) { animation-delay: .25s; height: 80%; }
+    .bar:nth-child(7) { animation-delay: .08s; height: 55%; }
 
     /* SOCK DRAWER */
     .drawer {
@@ -775,6 +849,22 @@
       }
     }
 
+    @keyframes barDance {
+      0%,100% { height: 30%; }
+      50% { height: 100%; }
+    }
+
+    @media (max-width: 700px) {
+      .flower-letter-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .flower-letter {
+        min-height: 105px;
+      }
+    }
+
     @media (max-width: 560px) {
       .card {
         padding: 34px 22px;
@@ -850,8 +940,8 @@
     }
   </style>
 </head>
-<body>
 
+<body>
   <audio id="song" src="song.mp3" preload="auto" loop></audio>
 
   <!-- MAIN PAGE -->
@@ -1016,26 +1106,67 @@
     </div>
   </section>
 
-  <!-- FLOWERS PAGE -->
+  <!-- FLOWERS PAGE WITH OPEN-WHEN NOTES -->
   <section class="scene" id="flowers">
-    <div class="card">
+    <div class="card flower-card-page">
       <div class="flower">❀</div>
-      <div class="tiny-title">lily of the valley</div>
-      <h2>Digital flowers</h2>
+      <div class="tiny-title">little flower notes</div>
+      <h2>Pick a flower</h2>
 
       <p>
-        Since I cannot give you real lily of the valley flowers today,
-        I made this small digital version instead.
+        Each lily of the valley has a small note hidden inside.
       </p>
 
-      <div class="mini-list">
-        <div class="mini-item">small white flowers</div>
-        <div class="mini-item">soft green leaves</div>
-        <div class="mini-item">a quiet pond</div>
-        <div class="mini-item">and a little birthday wish</div>
+      <div class="flower-letter-grid">
+        <button class="flower-letter" onclick="openFlowerLetter(this, 'quiet')">
+          <span>❀</span>
+          <small>open when the world feels loud</small>
+        </button>
+
+        <button class="flower-letter" onclick="openFlowerLetter(this, 'sad')">
+          <span>❀</span>
+          <small>open when you feel sad</small>
+        </button>
+
+        <button class="flower-letter" onclick="openFlowerLetter(this, 'happy')">
+          <span>❀</span>
+          <small>open when you are happy</small>
+        </button>
+
+        <button class="flower-letter" onclick="openFlowerLetter(this, 'sleep')">
+          <span>❀</span>
+          <small>open before you sleep</small>
+        </button>
+
+        <button class="flower-letter" onclick="openFlowerLetter(this, 'overthink')">
+          <span>❀</span>
+          <small>open when you overthink</small>
+        </button>
+
+        <button class="flower-letter" onclick="openFlowerLetter(this, 'lonely')">
+          <span>❀</span>
+          <small>open when you feel lonely</small>
+        </button>
+
+        <button class="flower-letter" onclick="openFlowerLetter(this, 'smile')">
+          <span>❀</span>
+          <small>open when you need a smile</small>
+        </button>
+
+        <button class="flower-letter" onclick="openFlowerLetter(this, 'weird')">
+          <span>❀</span>
+          <small>open when you feel too weird</small>
+        </button>
+
+        <button class="flower-letter" onclick="openFlowerLetter(this, 'last')">
+          <span>❀</span>
+          <small>open this one last</small>
+        </button>
       </div>
 
-      <button class="back-button" onclick="goHome()">Back to main page</button>
+      <div class="note-box flower-hidden-message" id="flowerHiddenMessage"></div>
+
+      <button class="back-button" onclick="resetFlowerLetters(); goHome()">Back to main page</button>
     </div>
   </section>
 
@@ -1049,6 +1180,16 @@
       <p>
         I left the song here too, because it belongs in this little gift.
       </p>
+
+      <div class="music-viz" id="musicViz">
+        <div class="bar" style="height:40%"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
 
       <button class="main-button" onclick="toggleMusic()" id="musicButton">
         Play song
@@ -1202,6 +1343,7 @@
       song.play()
         .then(() => {
           musicButton.textContent = "Pause song";
+          document.getElementById("musicViz").classList.add("playing");
         })
         .catch(() => {
           musicButton.textContent = "Play song";
@@ -1228,18 +1370,144 @@
     }
 
     function toggleMusic() {
+      const viz = document.getElementById("musicViz");
+
       if (song.paused) {
         song.play();
         musicButton.textContent = "Pause song";
+        viz.classList.add("playing");
       } else {
         song.pause();
         musicButton.textContent = "Play song";
+        viz.classList.remove("playing");
       }
     }
 
     video.addEventListener("ended", () => {
       showScene("message");
     });
+
+    /* FLOWER LETTERS LOGIC */
+    function openFlowerLetter(button, type) {
+      const messageBox = document.getElementById("flowerHiddenMessage");
+
+      document.querySelectorAll(".flower-letter").forEach(btn => {
+        btn.classList.remove("opened");
+      });
+
+      button.classList.add("opened");
+
+      const messages = {
+        quiet:
+`Kur bota bëhet shumë e zhurmshme,
+mos harro që nuk ke pse t’i përgjigjesh gjithçkaje.
+
+Ndonjëherë mjafton të marrësh frymë,
+të rrish pak në qetësi,
+dhe ta lësh ditën të kalojë pa e luftuar shumë.
+
+Edhe lulet më të vogla rriten në heshtje.`,
+
+        sad:
+`Nëse sot ndihesh pak më e rëndë se zakonisht,
+nuk do të thotë që je duke u thyer.
+
+Ndoshta thjesht ke mbajtur shumë gjëra brenda.
+
+Kështu që për sot:
+mos u mundo të jesh perfekte.
+Mjafton të jesh këtu.`,
+
+        happy:
+`Nëse je e lumtur sot,
+mbaje pak më gjatë këtë ndjenjë.
+
+Mos e shpjego shumë.
+Mos e zvogëlo.
+
+Disa momente nuk janë për t’u analizuar,
+janë vetëm për t’u ndjerë.
+
+Dhe ky është një prej tyre.`,
+
+        sleep:
+`Para se të flesh,
+lëre ditën aty ku është.
+
+Çfarë nuk u tha, mund të presë.
+Çfarë nuk u zgjidh, mund të presë.
+Çfarë të lodhi, nuk ka pse të vijë me ty në gjumë.
+
+Sonte merre vetëm qetësinë.`,
+
+        overthink:
+`Nëse mendja jote po bën shumë rrugë njëkohësisht,
+kthehu pak këtu.
+
+Jo çdo gjë ka nevojë për përgjigje menjëherë.
+Jo çdo ndjenjë duhet të ketë shpjegim.
+Jo çdo heshtje do të thotë diçka e keqe.
+
+Ndonjëherë gjërat janë më të buta se sa i mendon.`,
+
+        lonely:
+`Nëse ndihesh vetëm,
+mendo për këtë si një dritë të vogël të lënë ndezur për ty.
+
+Jo për të rregulluar gjithçka.
+Jo për të bërë sikur çdo gjë është mirë.
+
+Vetëm për të të kujtuar:
+dikush i mban mend gjërat e vogla që të bëjnë ty, ty.`,
+
+        smile:
+`Nëse të duhet një buzëqeshje:
+imagjino një udhëtim serioz me motor,
+një pamje dramatike mali,
+dhe pastaj…
+një ndalesë për suxhuk.
+
+Sepse edhe skenat më magjike kanë nevojë për snack.`,
+
+        weird:
+`Nëse ndihesh “too much” ose pak e çuditshme,
+mos e ul veten për t’u dukur më e thjeshtë.
+
+Disa njerëz janë interesantë pikërisht sepse nuk janë të lehtë për t’u përmbledhur.
+
+Qëndro kështu:
+pak kaotike,
+pak e butë,
+pak e rrallë.`,
+
+        last:
+`Nëse e hape këtë të fundit,
+atëherë e gjete fundin e vogël të kopshtit.
+
+Nuk kisha diçka perfekte për të thënë.
+Vetëm këtë:
+
+Desha të bëj diçka që të dukej pak si ty —
+me lule, muzikë, motorë, çorape të çuditshme,
+dhe një kujtim të vogël që mund ta hapësh kur të duash.
+
+Gëzuar ditëlindjen, dashuri.
+Të dua.`
+      };
+
+      messageBox.textContent = messages[type];
+      messageBox.style.display = "block";
+    }
+
+    function resetFlowerLetters() {
+      document.querySelectorAll(".flower-letter").forEach(btn => {
+        btn.classList.remove("opened");
+      });
+
+      const messageBox = document.getElementById("flowerHiddenMessage");
+      messageBox.style.display = "none";
+      messageBox.textContent = "";
+    }
 
     /* SOCK DRAWER LOGIC */
     function sockMessage(type) {
