@@ -983,7 +983,7 @@
         <span class="bell b4"></span>
       </div>
 
-      <div class="tiny-title">Gëzuar ditëlindjen!</div>
+      <div class="tiny-title">Gëzuar ditëlindjen, M!</div>
       <h1>Për ty</h1>
 
       
@@ -998,7 +998,7 @@
 
         <button onclick="showScene('message')">
           <span>💌</span>
-          shënimi
+          një mesazh
         </button>
 
         <button onclick="openVideo()">
@@ -1012,7 +1012,7 @@
         </button>
       </div>
 
-      <div class="signature">
+      <div class="signature" id="signatureText" style="display:none;">
         zgjidh çfarë do të hapësh
       </div>
     </div>
@@ -1141,6 +1141,7 @@ Të dua.
     function startExperience() {
       document.getElementById("startButton").style.display = "none";
       menu.style.display = "grid";
+      document.getElementById("signatureText").style.display = "block";
 
       song.volume = 0.55;
       song.play()
