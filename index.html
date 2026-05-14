@@ -15,7 +15,8 @@
       margin: 0;
       min-height: 100%;
       font-family: Georgia, "Times New Roman", serif;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       color: #263326;
       background: #dff0ea;
     }
@@ -610,67 +611,300 @@
       50% { height: 100%; }
     }
 
-    @media (max-width: 760px) {
+    @media (max-width: 768px) {
+      .scene {
+        position: absolute;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 18px 14px;
+        align-items: flex-start;
+        padding-top: max(24px, env(safe-area-inset-top));
+        padding-bottom: max(28px, env(safe-area-inset-bottom));
+      }
+
+      .main-scene {
+        align-items: center;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 430px;
+        padding: 28px 18px;
+        border-radius: 28px;
+        margin: 0 auto;
+      }
+
+      .wide-card {
+        max-width: 430px;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      h2 {
+        font-size: 29px;
+      }
+
+      p {
+        font-size: 15.5px;
+        line-height: 1.6;
+      }
+
+      .tiny-title {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+      }
+
+      .main-lotv {
+        width: 105px;
+        height: 105px;
+        margin-bottom: 8px;
+      }
+
+      .main-lotv .stem {
+        left: 51px;
+        height: 78px;
+      }
+
+      .main-lotv .leaf {
+        width: 32px;
+        height: 62px;
+      }
+
+      .main-lotv .leaf.left {
+        left: 22px;
+      }
+
+      .main-lotv .leaf.right {
+        right: 18px;
+      }
+
+      .main-lotv .bell {
+        width: 17px;
+        height: 17px;
+      }
+
+      .main-lotv .bell::after {
+        width: 11px;
+        height: 5px;
+        left: 3px;
+      }
+
+      .main-lotv .b1 { top: 15px; left: 56px; }
+      .main-lotv .b2 { top: 36px; left: 64px; }
+      .main-lotv .b3 { top: 56px; left: 58px; }
+      .main-lotv .b4 { top: 76px; left: 48px; }
+
+      .menu {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .menu button {
+        min-height: 62px;
+        padding: 12px 10px;
+        font-size: 14px;
+      }
+
+      .menu button span {
+        font-size: 20px;
+      }
+
+      .main-button,
+      .back-button,
+      .small-button {
+        padding: 12px 18px;
+        font-size: 14px;
+      }
+
+      .signature {
+        font-size: 13px;
+        margin-top: 16px;
+      }
+
+      .note-box {
+        max-width: 100%;
+        font-size: 14.5px;
+        line-height: 1.65;
+        padding: 16px;
+        border-radius: 20px;
+      }
+
       .things-grid {
-        grid-template-columns: 1fr;
-        max-width: 420px;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        max-width: 100%;
+        margin-top: 22px;
       }
 
       .thing {
         min-height: 105px;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .card {
-        padding: 34px 22px;
+        padding: 14px 8px;
+        border-radius: 22px;
       }
 
-      p {
-        font-size: 16px;
+      .thing span {
+        font-size: 32px;
+        margin-bottom: 8px;
       }
 
-      .menu {
-        grid-template-columns: 1fr;
+      .thing small {
+        font-size: 13px;
       }
 
       .video-wrap {
-        padding: 9px;
+        width: 100%;
+        max-width: 430px;
+        padding: 8px;
         border-radius: 24px;
+        margin-top: 20px;
       }
 
       video {
         border-radius: 18px;
       }
 
-      .lotv-corner {
-        width: 78px;
-        height: 130px;
-      }
-
-      .lotv-corner .stem {
-        left: 36px;
-        height: 94px;
-      }
-
-      .lotv-corner .leaf {
-        width: 28px;
-        height: 62px;
-      }
-
-      .lotv-corner .bell {
-        width: 16px;
-        height: 16px;
-      }
-
-      .lotv-corner .bell::after {
-        width: 10px;
-        height: 5px;
+      .video-buttons {
+        gap: 8px;
       }
 
       .pond {
-        width: 88vw;
+        width: 95vw;
+        height: 19vh;
+        bottom: 4%;
+      }
+
+      .hill1 {
+        width: 95vw;
         height: 22vh;
+        bottom: 12%;
+      }
+
+      .hill2 {
+        width: 80vw;
+        height: 20vh;
+        bottom: 14%;
+      }
+
+      .hill3 {
+        width: 70vw;
+        height: 16vh;
+        left: 16vw;
+        bottom: 16%;
+      }
+
+      .sun-glow {
+        width: 120px;
+        height: 120px;
+        top: 5%;
+        right: 4%;
+      }
+
+      .cloud1 {
+        transform: scale(0.75);
+        left: -4%;
+        top: 9%;
+      }
+
+      .cloud2 {
+        transform: scale(0.75);
+        right: -6%;
+        top: 15%;
+      }
+
+      .lotv-corner {
+        opacity: 0.55;
+        transform: scale(0.7);
+      }
+
+      .lotv1 {
+        left: -8%;
+        bottom: 8%;
+      }
+
+      .lotv2 {
+        right: -8%;
+        bottom: 8%;
+      }
+
+      .lotv3 {
+        left: -8%;
+        top: 15%;
+      }
+
+      .lotv4 {
+        right: -8%;
+        top: 20%;
+      }
+
+      .lily-pad {
+        transform: scale(0.75);
+      }
+
+      .lp1 { left: 12%; top: 42%; }
+      .lp2 { right: 14%; top: 30%; }
+      .lp3 { left: 44%; top: 54%; }
+      .lp4 { right: 35%; top: 64%; }
+    }
+
+    @media (max-width: 390px) {
+      .card {
+        padding: 24px 15px;
+        border-radius: 24px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      h2 {
+        font-size: 26px;
+      }
+
+      p {
+        font-size: 14.5px;
+      }
+
+      .menu {
+        grid-template-columns: 1fr;
+      }
+
+      .things-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .thing {
+        min-height: 92px;
+      }
+
+      .note-box {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-height: 520px) and (orientation: landscape) {
+      .scene {
+        align-items: flex-start;
+        padding-top: 12px;
+      }
+
+      .card {
+        margin: 12px auto;
+        padding: 22px 18px;
+      }
+
+      .main-lotv {
+        display: none;
+      }
+
+      .pond {
+        opacity: 0.55;
+      }
+
+      .lotv-corner {
+        opacity: 0.35;
       }
     }
   </style>
@@ -870,9 +1104,9 @@ Të dua.
           <small>motor</small>
         </button>
 
-        <button class="thing" onclick="openThing(this, 'tattoo')">
-          <span>🖤</span>
-          <small>tattoo</small>
+        <button class="thing" onclick="openThing(this, 'lily')">
+          <span>🤍</span>
+          <small>lily of the valley</small>
         </button>
 
         <button class="thing" onclick="openThing(this, 'socks')">
@@ -968,66 +1202,66 @@ Të dua.
         suxhuk:
 `Kjo është për suxhukun.
 
-Sepse edhe në një univers pak si përrallë,
-duhet patjetër një pushim serioz për ushqim.
+Nuk e di si arritëm në pikën që suxhuku të bëhej pjesë e një dhurate ditëlindjeje,
+po ja ku jemi.
 
-Jo shumë elegante.
-Jo shumë poetike.
-Po shumë e rëndësishme.
+Ti ha shumë suxhuk, pak si shumë madje,
+po nuk po gjykoj… vetëm po e dokumentoj.
 
 Suxhuk digjital u hap:
-nuk hahet, fatkeqësisht,
-po është bërë me shumë seriozitet emocional.`,
+pak dirty, pak funny, shumë ti.`,
 
         motor:
 `Kjo është për motorin.
 
-Jo vetëm se duket cool,
-po sepse ka atë ndjesinë e lëvizjes,
-sikur po ikën pak nga zhurma,
-dhe po zgjedh rrugën më të gjatë vetëm se pamja është më e bukur.
+Ty të pëlqen shpejtësia,
+po ama ngele tu thyer çdo gjë rrugës.
 
-Shpresoj që ky vit të të sjellë rrugë që të ndihen të lira,
-edhe vende ku ia vlen të arrish.`,
+Uroj të shërohesh sa më shpejt,
+që më në fund të dalësh për ecje,
+se ngela tu t’thënë “hajde dalim pak” xp.
 
-        tattoo:
-`Kjo është për tattoo-t.
+Dhe po, një ditë do dalësh pa u prishur si personazh loje.`,
 
-Sepse disa gjëra nuk janë thjesht dekor.
-Disa gjëra janë si shenjë që ti i ke zgjedhur,
-i ke mbajtur,
-dhe i ke bërë pjesë tënden.
+        lily:
+`Kjo është për lily of the valley.
 
-Shpresoj të vazhdosh të bëhesh akoma më shumë vetja jote,
-pa pasur nevojë t’ia shpjegosh çdo detaj gjithkujt.`,
+Të vogla, të bardha, të qeta,
+po prap shumë të bukura pa pasur nevojë të bëjnë zhurmë.
+
+Pak si ti.
+
+Je e bukur si ato,
+jo në atë mënyrën perfekte,
+po në atë mënyrën e butë që mbahet mend.`,
 
         socks:
 `Kjo është për çorapet.
 
-Ngjyra të ndryshme,
-forma pak të çuditshme,
-ndoshta nuk përputhen me asgjë,
-po prap bëjnë sens.
+Ti je plot ngjyra,
+pak si çorapet që vendos të vesh.
 
-Pak si disa njerëz:
-nuk janë të thjeshtë për t’u shpjeguar,
-po janë shumë të lehtë për t’u mbajtur mend.`,
+Ndonjëherë nuk kanë pse të përputhen me asgjë,
+sepse prap duken bukur pikërisht ashtu.
+
+Dhe mendoj që kjo të shkon shumë:
+pak kaos,
+pak ngjyra,
+pak e çuditshme,
+po shumë e veçantë.`,
 
         ludo:
 `Kjo është për Ludo-n.
 
-Sepse ndonjëherë jeta është thjesht:
-hidhe zarin,
-ec pak,
-bllokohu,
-prit një gjashtë,
-provo prap.
+Zemra ime,
+ti ke fat edhe në lojë edhe në dashuri,
+sepse je e mrekullueshme.
 
-Kështu që urimi im është ky:
-që zarat e tu këtë vit të jenë më me fat,
-që gjërat të ecin përpara,
-dhe që edhe kur loja bëhet kaotike,
-ti prap të kesh arsye për të qeshur.`
+Edhe kur loja bëhet kaos,
+ti prap ia del disi.
+
+Uroj që këtë vit zarat të bien në anën tënde,
+dhe që çdo gjë e mirë të të vijë më lehtë.`
       };
 
       messageBox.textContent = messages[type];
