@@ -1,1664 +1,1522 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>For you</title>
-
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --green:#5f7f62;
-  --green-dark:#3d5c40;
-  --green-light:#dceee5;
-  --text:#263326;
-  --text-muted:#687a67;
-  --text-body:#3b473b;
-  --card-bg:rgba(255,255,255,0.76);
-  --note-bg:rgba(255,255,255,0.45);
-  --transition:0.35s cubic-bezier(0.34,1.56,0.64,1);
-}
-
-html,body{
-  min-height:100%;
-  font-family:Georgia,"Times New Roman",serif;
-  color:var(--text);
-  overflow:hidden;
-}
-
-body{
-  min-height:100vh;
-  background:
-    radial-gradient(circle at 18% 18%,rgba(255,255,255,.85),transparent 23%),
-    radial-gradient(circle at 82% 76%,rgba(255,255,255,.55),transparent 28%),
-    linear-gradient(135deg,#dceee5,#bad6cb,#f8f1e7);
-}
-
-body::before{
-  content:"";
-  position:fixed;
-  inset:-20%;
-  background:radial-gradient(circle,rgba(255,255,255,.38) 2px,transparent 3px);
-  background-size:58px 58px;
-  animation:waterMove 16s linear infinite;
-  opacity:.45;
-  z-index:0;
-  pointer-events:none;
-}
-
-/* LILY OF THE VALLEY DECOR */
-.lotv-sprig {
-  position: fixed;
-  z-index: 1;
-  width: 90px;
-  height: 150px;
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.82;
-  animation: float 7s ease-in-out infinite;
-}
-
-.lotv-sprig .stem {
-  position: absolute;
-  left: 42px;
-  top: 18px;
-  width: 3px;
-  height: 116px;
-  background: rgba(83, 122, 86, 0.55);
-  border-radius: 999px;
-  transform: rotate(10deg);
-}
-
-.lotv-sprig .leaf {
-  position: absolute;
-  bottom: 2px;
-  width: 34px;
-  height: 76px;
-  background: rgba(122, 158, 116, 0.35);
-  border-radius: 100% 0 100% 0;
-  filter: blur(0.1px);
-}
-
-.lotv-sprig .leaf.left {
-  left: 16px;
-  transform: rotate(-28deg);
-}
-
-.lotv-sprig .leaf.right {
-  right: 10px;
-  transform: rotate(20deg) scaleX(-1);
-}
-
-.bell {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  background: rgba(255, 255, 255, 0.94);
-  border-radius: 50% 50% 46% 46%;
-  box-shadow: 0 8px 18px rgba(80, 110, 85, 0.16);
-}
-
-.bell::after {
-  content: "";
-  position: absolute;
-  left: 3px;
-  bottom: -3px;
-  width: 12px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.94);
-  border-radius: 0 0 12px 12px;
-}
-
-.bell.b1 { top: 28px; left: 48px; }
-.bell.b2 { top: 50px; left: 56px; }
-.bell.b3 { top: 74px; left: 51px; }
-.bell.b4 { top: 96px; left: 43px; }
-
-.lotv1 {
-  top: 7%;
-  left: 8%;
-  transform: rotate(-10deg);
-}
-
-.lotv2 {
-  top: 13%;
-  right: 10%;
-  transform: rotate(14deg) scale(0.86);
-  animation-delay: 1.4s;
-}
-
-.lotv3 {
-  bottom: 10%;
-  right: 12%;
-  transform: rotate(-8deg) scale(1.05);
-  animation-delay: 2.6s;
-}
-
-.lotv4 {
-  bottom: 17%;
-  left: 11%;
-  transform: rotate(12deg) scale(0.9);
-  animation-delay: 3.7s;
-}
-
-.main-bouquet {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 12px;
-  animation:pulse 3s ease-in-out infinite;
-}
-
-.main-bouquet .stem {
-  position: absolute;
-  left: 58px;
-  top: 10px;
-  width: 3px;
-  height: 94px;
-  background: rgba(83, 122, 86, 0.62);
-  border-radius: 999px;
-  transform: rotate(8deg);
-}
-
-.main-bouquet .leaf {
-  position: absolute;
-  bottom: 6px;
-  width: 38px;
-  height: 72px;
-  background: rgba(122, 158, 116, 0.38);
-  border-radius: 100% 0 100% 0;
-}
-
-.main-bouquet .leaf.left {
-  left: 24px;
-  transform: rotate(-28deg);
-}
-
-.main-bouquet .leaf.right {
-  right: 18px;
-  transform: rotate(22deg) scaleX(-1);
-}
-
-.main-bouquet .bell {
-  width: 20px;
-  height: 20px;
-}
-
-.main-bouquet .bell.b1 { top: 18px; left: 64px; }
-.main-bouquet .bell.b2 { top: 42px; left: 72px; }
-.main-bouquet .bell.b3 { top: 66px; left: 66px; }
-.main-bouquet .bell.b4 { top: 88px; left: 56px; }
-
-.sparkle{
-  position:fixed;
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  background:rgba(255,255,255,.95);
-  z-index:1;
-  animation:sparkle 3s ease-in-out infinite;
-  pointer-events:none;
-}
-
-.s1{top:30%;left:24%}
-.s2{top:62%;left:74%;animation-delay:1s}
-.s3{top:44%;left:84%;animation-delay:1.8s}
-.s4{top:76%;left:32%;animation-delay:2.4s}
-
-/* PARTICLE SYSTEM */
-.particle{
-  position:fixed;
-  pointer-events:none;
-  z-index:99;
-  font-size:18px;
-  animation:particleFly 1.2s ease-out forwards;
-}
-
-/* SCENES */
-.scene{
-  position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:24px;
-  opacity:0;
-  pointer-events:none;
-  z-index:2;
-  overflow-y:auto;
-  transform:translateY(20px);
-  transition:opacity 0.5s ease,transform 0.5s ease;
-}
-
-.scene.active{
-  opacity:1;
-  pointer-events:auto;
-  transform:translateY(0);
-}
-
-.scene.exit{
-  opacity:0;
-  transform:translateY(-20px);
-  pointer-events:none;
-}
-
-/* CARDS */
-.card{
-  width:min(92vw,780px);
-  padding:38px 30px;
-  border-radius:34px;
-  text-align:center;
-  background:var(--card-bg);
-  backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,.9);
-  box-shadow:0 30px 80px rgba(50,80,65,.24);
-  animation:cardFloat 4.5s ease-in-out infinite;
-}
-
-.tiny-title{
-  font-size:13px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--text-muted);
-  margin-bottom:14px;
-}
-
-h1{
-  margin:0 0 16px;
-  font-weight:normal;
-  font-size:clamp(32px,6vw,50px);
-}
-
-h2{
-  margin:0 0 18px;
-  font-weight:normal;
-  font-size:clamp(26px,5vw,38px);
-}
-
-p{
-  max-width:520px;
-  margin:0 auto 22px;
-  font-size:17px;
-  line-height:1.7;
-  color:var(--text-body);
-}
-
-.flower-icon{
-  font-size:48px;
-  margin-bottom:12px;
-  animation:pulse 3s ease-in-out infinite;
-  display:block;
-}
-
-/* BUTTONS */
-.btn-primary,.menu-btn,.btn-back,.btn-small{
-  border:none;
-  border-radius:999px;
-  padding:14px 22px;
-  font-family:inherit;
-  font-size:15px;
-  cursor:pointer;
-  transition:transform 0.25s var(--transition),background 0.25s ease,box-shadow 0.2s ease;
-  position:relative;
-  overflow:hidden;
-}
-
-.btn-primary{
-  color:white;
-  background:var(--green);
-  box-shadow:0 12px 26px rgba(60,90,70,.25);
-}
-
-.btn-primary:hover{
-  transform:translateY(-3px);
-  background:var(--green-dark);
-  box-shadow:0 16px 32px rgba(60,90,70,.35);
-}
-
-.btn-primary:active{
-  transform:translateY(-1px) scale(0.98);
-}
-
-.btn-back,.btn-small{
-  margin-top:16px;
-  background:transparent;
-  color:#4d684f;
-  border:1px solid rgba(77,104,79,.35);
-  box-shadow:none;
-  padding:11px 20px;
-}
-
-.btn-back:hover,.btn-small:hover{
-  background:rgba(255,255,255,.45);
-  transform:translateY(-2px);
-}
-
-/* RIPPLE */
-.btn-primary::after{
-  content:"";
-  position:absolute;
-  border-radius:50%;
-  background:rgba(255,255,255,.3);
-  width:0;
-  height:0;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  transition:width 0.4s ease,height 0.4s ease,opacity 0.4s ease;
-  opacity:0;
-}
-
-.btn-primary:active::after{
-  width:200px;
-  height:200px;
-  opacity:0;
-}
-
-/* MENU GRID */
-.menu{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin-top:26px;
-}
-
-.menu-btn{
-  min-height:64px;
-  background:rgba(95,127,98,.92);
-  color:white;
-  box-shadow:0 12px 26px rgba(60,90,70,.25);
-  transform:translateY(30px);
-  opacity:0;
-  transition:transform 0.4s var(--transition),opacity 0.4s ease,background 0.25s ease,box-shadow 0.2s ease;
-}
-
-.menu-btn.reveal{
-  transform:translateY(0);
-  opacity:1;
-}
-
-.menu-btn:hover{
-  transform:translateY(-3px);
-  background:rgba(80,110,85,.95);
-  box-shadow:0 16px 32px rgba(60,90,70,.35);
-}
-
-.menu-btn:active{
-  transform:translateY(-1px) scale(0.98);
-}
-
-.menu-btn span{
-  display:block;
-  font-size:20px;
-  margin-bottom:4px;
-}
-
-.signature{
-  margin-top:22px;
-  color:#6b786b;
-  font-size:14px;
-}
-
-/* VIDEO */
-.video-wrap{
-  width:min(92vw,780px);
-  padding:14px;
-  border-radius:32px;
-  background:rgba(255,255,255,.68);
-  backdrop-filter:blur(14px);
-  box-shadow:0 30px 80px rgba(40,65,55,.28);
-  border:1px solid rgba(255,255,255,.85);
-  text-align:center;
-}
-
-video{
-  width:100%;
-  display:block;
-  border-radius:24px;
-  background:black;
-}
-
-.video-buttons{
-  display:flex;
-  justify-content:center;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-top:16px;
-}
-
-/* NOTE / MINI ITEMS */
-.note-box{
-  margin:20px auto 0;
-  padding:18px;
-  max-width:520px;
-  border-radius:24px;
-  background:var(--note-bg);
-  border:1px solid rgba(255,255,255,.75);
-  color:var(--text-body);
-  font-size:16px;
-  line-height:1.7;
-}
-
-.mini-list{
-  max-width:520px;
-  margin:18px auto 0;
-  display:grid;
-  gap:12px;
-}
-
-.mini-item{
-  padding:14px 16px;
-  border-radius:20px;
-  background:rgba(255,255,255,.46);
-  border:1px solid rgba(255,255,255,.75);
-  font-size:16px;
-  color:var(--text-body);
-  transform:translateX(-20px);
-  opacity:0;
-  transition:transform 0.4s var(--transition),opacity 0.4s ease;
-}
-
-.mini-item.reveal{
-  transform:translateX(0);
-  opacity:1;
-}
-
-/* SONG / MUSIC VIZ */
-.music-viz{
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  gap:4px;
-  height:48px;
-  margin:20px auto;
-  opacity:0;
-  transition:opacity 0.4s ease;
-}
-
-.music-viz.playing{
-  opacity:1;
-}
-
-.bar{
-  width:6px;
-  border-radius:3px;
-  background:var(--green);
-  animation:barDance 0.8s ease-in-out infinite;
-}
-
-.bar:nth-child(2){animation-delay:.1s;height:60%}
-.bar:nth-child(3){animation-delay:.2s;height:90%}
-.bar:nth-child(4){animation-delay:.05s;height:70%}
-.bar:nth-child(5){animation-delay:.15s;height:50%}
-.bar:nth-child(6){animation-delay:.25s;height:80%}
-.bar:nth-child(7){animation-delay:.08s;height:55%}
-
-/* FLOWERS PAGE */
-.garden{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:16px;
-  max-width:520px;
-  margin:24px auto 0;
-}
-
-.flower-btn{
-  border:none;
-  background:rgba(255,255,255,.5);
-  border-radius:50%;
-  width:72px;
-  height:72px;
-  font-size:32px;
-  cursor:pointer;
-  transition:transform 0.3s var(--transition),background 0.25s ease,box-shadow 0.25s ease;
-  box-shadow:0 8px 20px rgba(60,90,70,.15);
-  position:relative;
-}
-
-.flower-btn:hover{
-  transform:scale(1.18) rotate(-5deg);
-  background:rgba(255,255,255,.85);
-  box-shadow:0 12px 28px rgba(60,90,70,.25);
-}
-
-.flower-btn.bloomed{
-  animation:bloom 0.5s var(--transition) forwards;
-}
-
-.flower-label{
-  position:absolute;
-  bottom:-26px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:11px;
-  color:var(--text-muted);
-  white-space:nowrap;
-  opacity:0;
-  transition:opacity 0.2s ease;
-  pointer-events:none;
-}
-
-.flower-btn:hover .flower-label{
-  opacity:1;
-}
-
-/* SOCK DRAWER */
-.drawer{
-  margin:24px auto;
-  max-width:520px;
-  padding:18px;
-  border-radius:26px;
-  background:rgba(255,255,255,.42);
-  border:1px solid rgba(255,255,255,.8);
-}
-
-.drawer-handle{
-  width:80px;
-  height:8px;
-  border-radius:999px;
-  background:rgba(77,104,79,.35);
-  margin:0 auto 18px;
-  cursor:pointer;
-  transition:background 0.2s ease;
-}
-
-.drawer-handle:hover{
-  background:rgba(77,104,79,.6);
-}
-
-.sock-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-
-.sock-btn{
-  border:none;
-  border-radius:22px;
-  padding:18px 10px;
-  font-size:30px;
-  cursor:pointer;
-  background:rgba(255,255,255,.62);
-  box-shadow:0 10px 22px rgba(60,90,70,.14);
-  transition:transform 0.3s var(--transition),background 0.25s ease,box-shadow 0.25s ease;
-  position:relative;
-}
-
-.sock-btn:hover{
-  transform:translateY(-6px) rotate(-4deg);
-  background:rgba(255,255,255,.92);
-  box-shadow:0 16px 30px rgba(60,90,70,.2);
-}
-
-.sock-btn:active{
-  transform:translateY(-2px) scale(0.96);
-}
-
-.sock-btn.picked{
-  animation:sockPop 0.5s var(--transition) forwards;
-}
-
-.game-msg{
-  display:none;
-  animation:fadeUp 0.5s ease forwards;
-}
-
-.game-msg.show{
-  display:block;
-}
-
-/* SNACK STOP */
-.picnic-box{
-  margin:24px auto;
-  max-width:440px;
-  padding:24px;
-  border-radius:28px;
-  background:rgba(255,255,255,.48);
-  border:1px solid rgba(255,255,255,.8);
-  box-shadow:0 16px 34px rgba(60,90,70,.16);
-}
-
-.suxhuk-area{
-  display:none;
-  margin-top:22px;
-  animation:fadeUp 0.8s ease forwards;
-}
-
-.suxhuk{
-  font-size:58px;
-  margin:16px 0;
-  transition:transform 0.4s ease,opacity 0.3s ease;
-  display:block;
-}
-
-.suxhuk.cut{
-  transform:rotate(-8deg) scale(0.96);
-  opacity:.55;
-}
-
-.suxhuk-slices{
-  display:none;
-  margin-top:16px;
-  font-size:34px;
-  animation:fadeUp 0.6s ease forwards;
-}
-
-.progress-dots{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin:10px 0;
-}
-
-.dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:rgba(95,127,98,.3);
-  transition:background 0.3s ease;
-}
-
-.dot.active{
-  background:var(--green);
-}
-
-/* LUDO */
-.turn-box{
-  margin:14px auto 8px;
-  padding:12px 18px;
-  width:fit-content;
-  border-radius:999px;
-  background:rgba(255,255,255,.55);
-  border:1px solid rgba(255,255,255,.85);
-  color:#3f563f;
-  font-size:16px;
-  transition:all 0.3s ease;
-}
-
-.dice-wrap{
-  position:relative;
-  display:inline-block;
-  cursor:pointer;
-  user-select:none;
-}
-
-.dice{
-  font-size:42px;
-  margin:10px 0 4px;
-  transition:transform 0.15s ease;
-  display:inline-block;
-}
-
-.dice.rolling{
-  animation:diceRoll 0.6s ease;
-}
-
-.dice-tap{
-  font-size:12px;
-  color:var(--text-muted);
-  margin-bottom:12px;
-}
-
-.ludo-cross{
-  width:min(82vw,520px);
-  height:min(82vw,520px);
-  margin:24px auto;
-  display:grid;
-  grid-template-columns:repeat(9,1fr);
-  grid-template-rows:repeat(9,1fr);
-  gap:5px;
-}
-
-.cross-cell{
-  border-radius:13px;
-  background:rgba(255,255,255,.46);
-  border:1px solid rgba(255,255,255,.82);
-  box-shadow:0 7px 16px rgba(60,90,70,.1);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#4d684f;
-  font-size:11px;
-  position:relative;
-  overflow:hidden;
-}
-
-.cross-cell.empty{
-  background:transparent;
-  border:none;
-  box-shadow:none;
-}
-
-.cross-cell.center{
-  background:rgba(255,255,255,.75);
-  border:1px solid rgba(95,127,98,.45);
-  font-weight:bold;
-  color:#4d684f;
-}
-
-.cross-cell.start1{
-  background:rgba(95,127,98,.28);
-}
-
-.cross-cell.start2{
-  background:rgba(125,115,155,.25);
-}
-
-.ludo-piece{
-  border:none;
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  font-size:17px;
-  cursor:pointer;
-  box-shadow:0 8px 18px rgba(50,70,60,.22);
-  transition:transform 0.2s var(--transition),box-shadow 0.2s ease;
-  padding:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.ludo-piece:hover:not(:disabled){
-  transform:scale(1.18);
-}
-
-.ludo-piece.available{
-  outline:3px solid rgba(95,127,98,.75);
-  animation:pulseGlow 1.4s ease-in-out infinite;
-}
-
-.ludo-piece.p1{
-  background:#dfeee5;
-}
-
-.ludo-piece.p2{
-  background:#ece8f6;
-}
-
-.ludo-piece:disabled{
-  cursor:default;
-  opacity:.88;
-}
-
-.ludo-stack{
-  display:flex;
-  gap:2px;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-}
-
-.piece-moved{
-  animation:pieceJump 0.4s var(--transition);
-}
-
-.ludo-info{
-  transition:all 0.3s ease;
-}
-
-/* ANIMATIONS */
-@keyframes waterMove{
-  from{transform:translate(0,0)}
-  to{transform:translate(-58px,-58px)}
-}
-
-@keyframes cardFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-8px)}
-}
-
-@keyframes float{
-  0%,100%{transform:translateY(0) rotate(0deg)}
-  50%{transform:translateY(-16px) rotate(4deg)}
-}
-
-@keyframes pulse{
-  0%,100%{transform:scale(1);opacity:1}
-  50%{transform:scale(1.07);opacity:.85}
-}
-
-@keyframes sparkle{
-  0%,100%{transform:scale(.5);opacity:.2}
-  50%{transform:scale(1.4);opacity:1}
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(12px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-@keyframes bloom{
-  0%{transform:scale(1)}
-  40%{transform:scale(1.35) rotate(-8deg)}
-  70%{transform:scale(.92) rotate(4deg)}
-  100%{transform:scale(1) rotate(0deg)}
-}
-
-@keyframes sockPop{
-  0%{transform:scale(1)}
-  30%{transform:scale(1.2) rotate(6deg)}
-  70%{transform:scale(.95) rotate(-2deg)}
-  100%{transform:scale(1) rotate(0deg)}
-}
-
-@keyframes barDance{
-  0%,100%{height:30%}
-  50%{height:100%}
-}
-
-@keyframes diceRoll{
-  0%,100%{transform:rotate(0) scale(1)}
-  25%{transform:rotate(-15deg) scale(1.1)}
-  50%{transform:rotate(12deg) scale(1.15)}
-  75%{transform:rotate(-8deg) scale(1.1)}
-}
-
-@keyframes pulseGlow{
-  0%,100%{box-shadow:0 0 0 3px rgba(95,127,98,.4)}
-  50%{box-shadow:0 0 0 6px rgba(95,127,98,.2),0 0 14px rgba(95,127,98,.3)}
-}
-
-@keyframes pieceJump{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
-}
-
-@keyframes particleFly{
-  0%{opacity:1;transform:translate(0,0) scale(1)}
-  100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0.3)}
-}
-
-@media(max-width:560px){
-  .card{padding:34px 22px}
-  p{font-size:16px}
-  .menu{grid-template-columns:1fr}
-  .video-wrap{padding:9px;border-radius:24px}
-  video{border-radius:18px}
-  .sock-grid{grid-template-columns:repeat(2,1fr)}
-  .ludo-cross{width:min(92vw,360px);height:min(92vw,360px);gap:4px}
-  .ludo-piece{width:24px;height:24px;font-size:14px}
-  .cross-cell{border-radius:9px;font-size:9px}
-
-  .lotv-sprig{
-    width:70px;
-    height:120px;
-    opacity:0.65;
-  }
-
-  .lotv-sprig .stem{
-    height:94px;
-  }
-
-  .lotv-sprig .leaf{
-    height:58px;
-    width:28px;
-  }
-
-  .bell{
-    width:14px;
-    height:14px;
-  }
-
-  .bell::after{
-    left:2px;
-    width:10px;
-    height:5px;
-  }
-
-  .main-bouquet{
-    width:105px;
-    height:105px;
-  }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For you</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Georgia, "Times New Roman", serif;
+      overflow: hidden;
+      color: #263326;
+      background: #dff0ea;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255,255,255,0.9), transparent 22%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.65), transparent 18%),
+        linear-gradient(to bottom, #edf8ff 0%, #dff3ea 38%, #c3dfcb 72%, #b8d4c4 100%);
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -20%;
+      background:
+        radial-gradient(circle, rgba(255,255,255,0.22) 2px, transparent 3px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+      animation: waterMove 18s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .scene {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.7s ease;
+      z-index: 2;
+      overflow-y: auto;
+    }
+
+    .scene.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* MAIN NATURE SCENE */
+    .main-scene {
+      overflow: hidden;
+    }
+
+    .pond-landscape {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .sun-glow {
+      position: absolute;
+      top: 6%;
+      right: 13%;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,244,196,0.85), rgba(255,244,196,0.3), transparent 70%);
+      filter: blur(2px);
+    }
+
+    .cloud {
+      position: absolute;
+      background: rgba(255,255,255,0.62);
+      border-radius: 999px;
+      filter: blur(0.5px);
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.62);
+      border-radius: 50%;
+    }
+
+    .cloud1 {
+      width: 120px;
+      height: 36px;
+      top: 12%;
+      left: 11%;
+      animation: floatCloud 11s ease-in-out infinite;
+    }
+
+    .cloud1::before {
+      width: 44px;
+      height: 44px;
+      left: 14px;
+      top: -18px;
+    }
+
+    .cloud1::after {
+      width: 52px;
+      height: 52px;
+      right: 12px;
+      top: -20px;
+    }
+
+    .cloud2 {
+      width: 140px;
+      height: 38px;
+      top: 17%;
+      right: 24%;
+      animation: floatCloud 14s ease-in-out infinite;
+      animation-delay: 1.2s;
+    }
+
+    .cloud2::before {
+      width: 48px;
+      height: 48px;
+      left: 18px;
+      top: -16px;
+    }
+
+    .cloud2::after {
+      width: 56px;
+      height: 56px;
+      right: 15px;
+      top: -21px;
+    }
+
+    .hill {
+      position: absolute;
+      border-radius: 50%;
+      bottom: 18%;
+      filter: blur(0.3px);
+    }
+
+    .hill1 {
+      width: 70vw;
+      height: 28vh;
+      left: -6vw;
+      background: #9fc2a2;
+    }
+
+    .hill2 {
+      width: 55vw;
+      height: 24vh;
+      right: -4vw;
+      background: #8fb291;
+      bottom: 20%;
+    }
+
+    .hill3 {
+      width: 42vw;
+      height: 19vh;
+      left: 30vw;
+      background: #a8c9ab;
+      bottom: 22%;
+    }
+
+    .pond {
+      position: absolute;
+      left: 50%;
+      bottom: 9%;
+      transform: translateX(-50%);
+      width: min(72vw, 760px);
+      height: min(26vh, 240px);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(210,248,255,0.95), rgba(150,213,219,0.95) 55%, rgba(109,172,176,0.98) 100%);
+      box-shadow:
+        inset 0 16px 40px rgba(255,255,255,0.35),
+        0 20px 40px rgba(74,120,115,0.18);
+      border: 5px solid rgba(215,244,235,0.65);
+    }
+
+    .pond::before {
+      content: "";
+      position: absolute;
+      inset: 16% 18%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.26), transparent 58%);
+      opacity: 0.8;
+    }
+
+    .lily-pad {
+      position: absolute;
+      background: #7faa72;
+      border-radius: 50% 50% 45% 50%;
+      box-shadow: inset -8px -5px 0 rgba(95,130,85,0.22);
+    }
+
+    .lp1 {
+      width: 74px;
+      height: 54px;
+      left: 17%;
+      top: 44%;
+      transform: rotate(-10deg);
+    }
+
+    .lp2 {
+      width: 58px;
+      height: 44px;
+      right: 20%;
+      top: 32%;
+      transform: rotate(18deg);
+    }
+
+    .lp3 {
+      width: 65px;
+      height: 50px;
+      left: 46%;
+      top: 55%;
+      transform: rotate(-2deg);
+    }
+
+    .lp4 {
+      width: 48px;
+      height: 36px;
+      right: 38%;
+      top: 62%;
+      transform: rotate(24deg);
+    }
+
+    .reed {
+      position: absolute;
+      width: 3px;
+      border-radius: 999px;
+      background: rgba(86,132,85,0.65);
+      bottom: 18%;
+      transform-origin: bottom;
+    }
+
+    .reed::after {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: -2px;
+      width: 7px;
+      height: 12px;
+      background: rgba(110,86,49,0.65);
+      border-radius: 8px;
+    }
+
+    .r1 { height: 110px; left: 12%; transform: rotate(-6deg); }
+    .r2 { height: 88px; left: 15%; transform: rotate(8deg); }
+    .r3 { height: 106px; right: 12%; transform: rotate(5deg); }
+    .r4 { height: 82px; right: 16%; transform: rotate(-7deg); }
+
+    .lotv-corner {
+      position: absolute;
+      width: 110px;
+      height: 170px;
+      z-index: 2;
+      animation: floatSprig 7s ease-in-out infinite;
+      opacity: 0.9;
+    }
+
+    .lotv-corner .stem {
+      position: absolute;
+      left: 50px;
+      top: 22px;
+      width: 3px;
+      height: 124px;
+      background: rgba(77,119,75,0.58);
+      border-radius: 999px;
+      transform: rotate(10deg);
+    }
+
+    .lotv-corner .leaf {
+      position: absolute;
+      width: 38px;
+      height: 84px;
+      background: rgba(119,160,111,0.45);
+      border-radius: 100% 0 100% 0;
+      bottom: 0;
+    }
+
+    .lotv-corner .leaf.left {
+      left: 18px;
+      transform: rotate(-28deg);
+    }
+
+    .lotv-corner .leaf.right {
+      right: 14px;
+      transform: rotate(20deg) scaleX(-1);
+    }
+
+    .lotv-corner .bell {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: rgba(255,255,255,0.97);
+      border-radius: 50% 50% 46% 46%;
+      box-shadow: 0 8px 18px rgba(80,110,85,0.14);
+    }
+
+    .lotv-corner .bell::after {
+      content: "";
+      position: absolute;
+      left: 3px;
+      bottom: -3px;
+      width: 14px;
+      height: 6px;
+      background: rgba(255,255,255,0.97);
+      border-radius: 0 0 12px 12px;
+    }
+
+    .lotv-corner .b1 { top: 28px; left: 56px; }
+    .lotv-corner .b2 { top: 54px; left: 66px; }
+    .lotv-corner .b3 { top: 80px; left: 60px; }
+    .lotv-corner .b4 { top: 105px; left: 48px; }
+
+    .lotv1 { left: 3%; bottom: 14%; transform: rotate(-10deg); }
+    .lotv2 { right: 4%; bottom: 13%; transform: rotate(14deg); animation-delay: 1.2s; }
+    .lotv3 { left: 7%; top: 18%; transform: scale(0.86) rotate(-8deg); animation-delay: 2.1s; }
+    .lotv4 { right: 8%; top: 24%; transform: scale(0.82) rotate(12deg); animation-delay: 3s; }
+
+    .main-card {
+      position: relative;
+      z-index: 3;
+    }
+
+    .card {
+      width: min(92vw, 780px);
+      padding: 38px 30px;
+      border-radius: 34px;
+      text-align: center;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.88);
+      box-shadow: 0 30px 80px rgba(50, 80, 65, 0.20);
+      animation: cardFloat 4.8s ease-in-out infinite;
+    }
+
+    .tiny-title {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #6a7b69;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-weight: normal;
+      font-size: clamp(34px, 6vw, 52px);
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-weight: normal;
+      font-size: clamp(26px, 5vw, 38px);
+    }
+
+    p {
+      max-width: 540px;
+      margin: 0 auto 22px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: #3a473b;
+    }
+
+    .main-lotv {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 14px;
+    }
+
+    .main-lotv .stem {
+      position: absolute;
+      left: 64px;
+      top: 10px;
+      width: 3px;
+      height: 98px;
+      background: rgba(77,119,75,0.62);
+      border-radius: 999px;
+      transform: rotate(7deg);
+    }
+
+    .main-lotv .leaf {
+      position: absolute;
+      width: 42px;
+      height: 80px;
+      background: rgba(119,160,111,0.43);
+      border-radius: 100% 0 100% 0;
+      bottom: 10px;
+    }
+
+    .main-lotv .leaf.left {
+      left: 25px;
+      transform: rotate(-28deg);
+    }
+
+    .main-lotv .leaf.right {
+      right: 22px;
+      transform: rotate(22deg) scaleX(-1);
+    }
+
+    .main-lotv .bell {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      background: rgba(255,255,255,0.98);
+      border-radius: 50% 50% 46% 46%;
+      box-shadow: 0 10px 18px rgba(80,110,85,0.14);
+    }
+
+    .main-lotv .bell::after {
+      content: "";
+      position: absolute;
+      left: 3px;
+      bottom: -3px;
+      width: 15px;
+      height: 6px;
+      background: rgba(255,255,255,0.98);
+      border-radius: 0 0 12px 12px;
+    }
+
+    .main-lotv .b1 { top: 18px; left: 70px; }
+    .main-lotv .b2 { top: 44px; left: 80px; }
+    .main-lotv .b3 { top: 70px; left: 72px; }
+    .main-lotv .b4 { top: 95px; left: 60px; }
+
+    .menu {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .menu button,
+    .main-button,
+    .back-button,
+    .small-button {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-family: inherit;
+      font-size: 15px;
+      cursor: pointer;
+      color: white;
+      background: #5f7f62;
+      box-shadow: 0 12px 26px rgba(60, 90, 70, 0.22);
+      transition: transform 0.25s ease, background 0.25s ease, opacity 0.25s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      background: #526f55;
+    }
+
+    .menu button {
+      min-height: 64px;
+      background: rgba(95,127,98,0.93);
+    }
+
+    .menu button span {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .back-button,
+    .small-button {
+      margin-top: 16px;
+      background: transparent;
+      color: #4d684f;
+      border: 1px solid rgba(77,104,79,0.35);
+      box-shadow: none;
+      padding: 11px 20px;
+    }
+
+    .back-button:hover,
+    .small-button:hover {
+      background: rgba(255,255,255,0.45);
+    }
+
+    .signature {
+      margin-top: 22px;
+      color: #6b786b;
+      font-size: 14px;
+    }
+
+    .video-wrap {
+      width: min(92vw, 780px);
+      padding: 14px;
+      border-radius: 32px;
+      background: rgba(255,255,255,0.68);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 30px 80px rgba(40,65,55,0.28);
+      border: 1px solid rgba(255,255,255,0.85);
+      text-align: center;
+    }
+
+    video {
+      width: 100%;
+      display: block;
+      border-radius: 24px;
+      background: black;
+    }
+
+    .video-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .note-box {
+      margin: 20px auto 0;
+      padding: 18px;
+      max-width: 520px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(255,255,255,0.75);
+      color: #3b473b;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .mini-list {
+      max-width: 520px;
+      margin: 18px auto 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .mini-item {
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.46);
+      border: 1px solid rgba(255,255,255,0.75);
+      font-size: 16px;
+      color: #3b473b;
+    }
+
+    .flower {
+      font-size: 48px;
+      margin-bottom: 12px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    /* SOCK DRAWER */
+    .drawer {
+      margin: 24px auto;
+      max-width: 520px;
+      padding: 18px;
+      border-radius: 26px;
+      background: rgba(255,255,255,0.42);
+      border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    .drawer-handle {
+      width: 80px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(77,104,79,0.35);
+      margin: 0 auto 18px;
+    }
+
+    .sock-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .sock {
+      border: none;
+      border-radius: 22px;
+      padding: 18px 10px;
+      font-size: 30px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.62);
+      box-shadow: 0 10px 22px rgba(60,90,70,0.14);
+      transition: 0.25s ease;
+    }
+
+    .sock:hover {
+      transform: translateY(-4px) rotate(-2deg);
+      background: rgba(255,255,255,0.88);
+    }
+
+    /* SUXHUK */
+    .picnic-box {
+      margin: 24px auto;
+      max-width: 440px;
+      padding: 24px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.48);
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 16px 34px rgba(60,90,70,0.16);
+    }
+
+    .suxhuk-area {
+      display: none;
+      margin-top: 22px;
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    .suxhuk {
+      font-size: 58px;
+      margin: 16px 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .suxhuk.cut {
+      transform: rotate(-8deg) scale(0.96);
+      opacity: 0.55;
+    }
+
+    .suxhuk-slices {
+      display: none;
+      margin-top: 16px;
+      font-size: 34px;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    /* LUDO */
+    .turn-box {
+      margin: 14px auto 8px;
+      padding: 12px 18px;
+      width: fit-content;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.85);
+      color: #3f563f;
+      font-size: 16px;
+    }
+
+    .dice {
+      font-size: 42px;
+      margin: 10px 0 18px;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    .ludo-cross {
+      width: min(82vw, 520px);
+      height: min(82vw, 520px);
+      margin: 24px auto;
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      grid-template-rows: repeat(9, 1fr);
+      gap: 5px;
+    }
+
+    .cross-cell {
+      border-radius: 13px;
+      background: rgba(255,255,255,0.46);
+      border: 1px solid rgba(255,255,255,0.82);
+      box-shadow: 0 7px 16px rgba(60,90,70,0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4d684f;
+      font-size: 11px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cross-cell.empty {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .cross-cell.center {
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(95,127,98,0.45);
+      font-weight: bold;
+    }
+
+    .cross-cell.start1 {
+      background: rgba(95,127,98,0.28);
+    }
+
+    .cross-cell.start2 {
+      background: rgba(125,115,155,0.25);
+    }
+
+    .ludo-piece {
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size: 17px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 8px 18px rgba(50,70,60,0.22);
+      transition: transform 0.2s ease;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ludo-piece:hover {
+      transform: scale(1.12);
+    }
+
+    .ludo-piece.available {
+      outline: 3px solid rgba(95,127,98,0.75);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+
+    .ludo-piece.p1 { background: #dfeee5; }
+    .ludo-piece.p2 { background: #ece8f6; }
+
+    .ludo-piece:disabled {
+      cursor: default;
+      opacity: 0.88;
+    }
+
+    .ludo-stack {
+      display: flex;
+      gap: 2px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .game-message {
+      display: none;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    @keyframes waterMove {
+      from { transform: translate(0,0); }
+      to { transform: translate(-60px,-60px); }
+    }
+
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes floatSprig {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+
+    @keyframes floatCloud {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.06); opacity: 0.86; }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .card {
+        padding: 34px 22px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      .menu {
+        grid-template-columns: 1fr;
+      }
+
+      .video-wrap {
+        padding: 9px;
+        border-radius: 24px;
+      }
+
+      video {
+        border-radius: 18px;
+      }
+
+      .sock-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .ludo-cross {
+        width: min(92vw, 360px);
+        height: min(92vw, 360px);
+        gap: 4px;
+      }
+
+      .ludo-piece {
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+      }
+
+      .cross-cell {
+        border-radius: 9px;
+        font-size: 9px;
+      }
+
+      .lotv-corner {
+        width: 78px;
+        height: 130px;
+      }
+
+      .lotv-corner .stem {
+        left: 36px;
+        height: 94px;
+      }
+
+      .lotv-corner .leaf {
+        width: 28px;
+        height: 62px;
+      }
+
+      .lotv-corner .bell {
+        width: 16px;
+        height: 16px;
+      }
+
+      .lotv-corner .bell::after {
+        width: 10px;
+        height: 5px;
+      }
+
+      .pond {
+        width: 88vw;
+        height: 22vh;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="lotv-sprig lotv1">
-  <div class="stem"></div>
-  <div class="leaf left"></div>
-  <div class="leaf right"></div>
-  <span class="bell b1"></span>
-  <span class="bell b2"></span>
-  <span class="bell b3"></span>
-  <span class="bell b4"></span>
-</div>
+  <audio id="song" src="song.mp3" preload="auto" loop></audio>
 
-<div class="lotv-sprig lotv2">
-  <div class="stem"></div>
-  <div class="leaf left"></div>
-  <div class="leaf right"></div>
-  <span class="bell b1"></span>
-  <span class="bell b2"></span>
-  <span class="bell b3"></span>
-  <span class="bell b4"></span>
-</div>
+  <!-- MAIN PAGE -->
+  <section class="scene active main-scene" id="main">
+    <div class="pond-landscape">
+      <div class="sun-glow"></div>
 
-<div class="lotv-sprig lotv3">
-  <div class="stem"></div>
-  <div class="leaf left"></div>
-  <div class="leaf right"></div>
-  <span class="bell b1"></span>
-  <span class="bell b2"></span>
-  <span class="bell b3"></span>
-  <span class="bell b4"></span>
-</div>
+      <div class="cloud cloud1"></div>
+      <div class="cloud cloud2"></div>
 
-<div class="lotv-sprig lotv4">
-  <div class="stem"></div>
-  <div class="leaf left"></div>
-  <div class="leaf right"></div>
-  <span class="bell b1"></span>
-  <span class="bell b2"></span>
-  <span class="bell b3"></span>
-  <span class="bell b4"></span>
-</div>
+      <div class="hill hill1"></div>
+      <div class="hill hill2"></div>
+      <div class="hill hill3"></div>
 
-<div class="sparkle s1"></div>
-<div class="sparkle s2"></div>
-<div class="sparkle s3"></div>
-<div class="sparkle s4"></div>
+      <div class="reed r1"></div>
+      <div class="reed r2"></div>
+      <div class="reed r3"></div>
+      <div class="reed r4"></div>
 
-<audio id="song" src="song.mp3" preload="auto" loop></audio>
+      <div class="lotv-corner lotv1">
+        <div class="stem"></div>
+        <div class="leaf left"></div>
+        <div class="leaf right"></div>
+        <span class="bell b1"></span>
+        <span class="bell b2"></span>
+        <span class="bell b3"></span>
+        <span class="bell b4"></span>
+      </div>
 
-<!-- MAIN -->
-<section class="scene active" id="main">
-  <div class="card">
-    <div class="main-bouquet">
-      <div class="stem"></div>
-      <div class="leaf left"></div>
-      <div class="leaf right"></div>
-      <span class="bell b1"></span>
-      <span class="bell b2"></span>
-      <span class="bell b3"></span>
-      <span class="bell b4"></span>
-    </div>
+      <div class="lotv-corner lotv2">
+        <div class="stem"></div>
+        <div class="leaf left"></div>
+        <div class="leaf right"></div>
+        <span class="bell b1"></span>
+        <span class="bell b2"></span>
+        <span class="bell b3"></span>
+        <span class="bell b4"></span>
+      </div>
 
-    <div class="tiny-title">a small birthday thing</div>
-    <h1>For you</h1>
-    <p>I made you a little place with a short story, flowers, a song, a tiny game, and some small things to open.</p>
+      <div class="lotv-corner lotv3">
+        <div class="stem"></div>
+        <div class="leaf left"></div>
+        <div class="leaf right"></div>
+        <span class="bell b1"></span>
+        <span class="bell b2"></span>
+        <span class="bell b3"></span>
+        <span class="bell b4"></span>
+      </div>
 
-    <button class="btn-primary" id="startBtn" onclick="startExperience()">Start ✨</button>
+      <div class="lotv-corner lotv4">
+        <div class="stem"></div>
+        <div class="leaf left"></div>
+        <div class="leaf right"></div>
+        <span class="bell b1"></span>
+        <span class="bell b2"></span>
+        <span class="bell b3"></span>
+        <span class="bell b4"></span>
+      </div>
 
-    <div class="menu" id="menu" style="display:none">
-      <button class="menu-btn" onclick="openVideo()"><span>🎬</span>play the little movie</button>
-      <button class="menu-btn" onclick="nav('message')"><span>💌</span>open the note</button>
-      <button class="menu-btn" onclick="nav('flowers')"><span>❀</span>flowers</button>
-      <button class="menu-btn" onclick="nav('songPage')"><span>🎧</span>our song</button>
-      <button class="menu-btn" onclick="nav('gamePage')"><span>🎲</span>birthday ludo</button>
-      <button class="menu-btn" onclick="nav('sockDrawer')"><span>🧦</span>sock drawer</button>
-      <button class="menu-btn" onclick="nav('snackStop')"><span>🍴</span>snack stop</button>
-    </div>
-
-    <div class="signature" id="sig" style="opacity:0">choose what to open first</div>
-  </div>
-</section>
-
-<!-- VIDEO -->
-<section class="scene" id="videoScene">
-  <div class="video-wrap">
-    <video id="birthdayVideo" playsinline controls preload="metadata">
-      <source src="video.mp4" type="video/mp4">
-    </video>
-
-    <div class="video-buttons">
-      <button class="btn-small" onclick="replayVideo()">Replay video</button>
-      <button class="btn-small" onclick="goHome()">Back to main</button>
-    </div>
-  </div>
-</section>
-
-<!-- MESSAGE -->
-<section class="scene" id="message">
-  <div class="card">
-    <span class="flower-icon">💌</span>
-    <div class="tiny-title">a tiny note</div>
-    <h2>Happy birthday</h2>
-
-    <div class="note-box">
-      I hope today feels calm, kind, and beautiful —<br>
-      the way small things sometimes become the most special ones.<br><br>
-      Gëzuar ditëlindjen, dashuri. Të dua.
-    </div>
-
-    <button class="btn-back" onclick="goHome()">Back to main</button>
-  </div>
-</section>
-
-<!-- FLOWERS -->
-<section class="scene" id="flowers">
-  <div class="card">
-    <span class="flower-icon">❀</span>
-    <div class="tiny-title">lily of the valley</div>
-    <h2>Digital flowers</h2>
-
-    <p>Since I cannot give you real lily of the valley flowers today, I made this small digital version. Click them to bloom.</p>
-
-    <div class="garden" id="garden"></div>
-
-    <div class="note-box game-msg" id="flowerNote" style="margin-top:20px"></div>
-
-    <button class="btn-back" onclick="goHome()">Back to main</button>
-  </div>
-</section>
-
-<!-- SONG -->
-<section class="scene" id="songPage">
-  <div class="card">
-    <span class="flower-icon">🎧</span>
-    <div class="tiny-title">the song</div>
-    <h2>Our song</h2>
-
-    <p>I left the song here too, because it belongs in this little gift.</p>
-
-    <div class="music-viz" id="musicViz">
-      <div class="bar" style="height:40%"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-    </div>
-
-    <button class="btn-primary" onclick="toggleMusic()" id="musicButton">Play song</button>
-
-    <br>
-
-    <button class="btn-back" onclick="goHome()">Back to main</button>
-  </div>
-</section>
-
-<!-- SOCK DRAWER -->
-<section class="scene" id="sockDrawer">
-  <div class="card">
-    <span class="flower-icon">🧦</span>
-    <div class="tiny-title">tiny drawer</div>
-    <h2>Open the sock drawer</h2>
-
-    <p>Pick a pair. Obviously, normal socks were not invited.</p>
-
-    <div class="drawer">
-      <div class="drawer-handle" title="The drawer"></div>
-
-      <div class="sock-grid" id="sockGrid">
-        <button class="sock-btn" data-type="striped" onclick="sockMessage(this,'striped')">🧦<span class="flower-label">striped</span></button>
-        <button class="sock-btn" data-type="star" onclick="sockMessage(this,'star')">🌙<span class="flower-label">moon</span></button>
-        <button class="sock-btn" data-type="flower" onclick="sockMessage(this,'flower')">❀<span class="flower-label">flower</span></button>
-        <button class="sock-btn" data-type="chaos" onclick="sockMessage(this,'chaos')">✨<span class="flower-label">chaos</span></button>
-        <button class="sock-btn" data-type="lucky" onclick="sockMessage(this,'lucky')">🍀<span class="flower-label">lucky</span></button>
-        <button class="sock-btn" data-type="birthday" onclick="sockMessage(this,'birthday')">🎁<span class="flower-label">birthday</span></button>
+      <div class="pond">
+        <div class="lily-pad lp1"></div>
+        <div class="lily-pad lp2"></div>
+        <div class="lily-pad lp3"></div>
+        <div class="lily-pad lp4"></div>
       </div>
     </div>
 
-    <div class="note-box game-msg" id="sockNote"></div>
-
-    <button class="btn-back" onclick="resetSockDrawer();goHome()">Back to main</button>
-  </div>
-</section>
-
-<!-- SNACK STOP -->
-<section class="scene" id="snackStop">
-  <div class="card">
-    <span class="flower-icon">🍴</span>
-    <div class="tiny-title">mountain snack stop</div>
-    <h2>Emergency snack break</h2>
-
-    <p>Somewhere between the motorcycle ride and the flowers, there had to be a snack stop.</p>
-
-    <div class="picnic-box">
-      <p>A tiny picnic box is waiting at the viewpoint.</p>
-
-      <div class="progress-dots" id="snackDots">
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+    <div class="card main-card">
+      <div class="main-lotv">
+        <div class="stem"></div>
+        <div class="leaf left"></div>
+        <div class="leaf right"></div>
+        <span class="bell b1"></span>
+        <span class="bell b2"></span>
+        <span class="bell b3"></span>
+        <span class="bell b4"></span>
       </div>
 
-      <button class="btn-primary" id="snackBoxBtn" onclick="openSnackBox()">Open the picnic box</button>
+      <div class="tiny-title">a small birthday thing</div>
+      <h1>For you</h1>
 
-      <div class="suxhuk-area" id="suxhukArea">
-        <span class="suxhuk" id="suxhuk">🌭</span>
-        <button class="btn-small" onclick="cutSuxhuk()" id="cutBtn">Cut with knife 🔪</button>
-        <div class="suxhuk-slices" id="suxhukSlices">🥓 🥓 🥓 🥓 🥓</div>
+      <p>
+        I made you a tiny little place with a pond, flowers, a short movie,
+        a song, and a few hidden things to open.
+      </p>
+
+      <button class="main-button" onclick="startExperience()">Start</button>
+
+      <div class="menu" id="menu" style="display:none;">
+        <button onclick="openVideo()">
+          <span>🎬</span>
+          play the little movie
+        </button>
+
+        <button onclick="showScene('message')">
+          <span>💌</span>
+          open the note
+        </button>
+
+        <button onclick="showScene('flowers')">
+          <span>❀</span>
+          flowers
+        </button>
+
+        <button onclick="showScene('songPage')">
+          <span>🎧</span>
+          our song
+        </button>
+
+        <button onclick="showScene('gamePage')">
+          <span>🎲</span>
+          birthday ludo
+        </button>
+
+        <button onclick="showScene('sockDrawer')">
+          <span>🧦</span>
+          sock drawer
+        </button>
+
+        <button onclick="showScene('snackStop')">
+          <span>🍴</span>
+          snack stop
+        </button>
+      </div>
+
+      <div class="signature">
+        choose what to open first
       </div>
     </div>
+  </section>
 
-    <div class="note-box game-msg" id="snackNote">
-      Suxhuk successfully unlocked.<br><br>
-      Not edible, unfortunately. But it was prepared with full birthday seriousness.<br><br>
-      Small reminder: I hope your year is full of good food, good days, and people who remember the little things you like.
+  <!-- VIDEO PAGE -->
+  <section class="scene" id="videoScene">
+    <div class="video-wrap">
+      <video id="birthdayVideo" playsinline controls preload="metadata">
+        <source src="video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+      <div class="video-buttons">
+        <button class="small-button" onclick="replayVideo()">Replay video</button>
+        <button class="small-button" onclick="goHome()">Back to main page</button>
+      </div>
     </div>
+  </section>
 
-    <button class="btn-back" onclick="resetSnackStop();goHome()">Back to main</button>
-  </div>
-</section>
+  <!-- MESSAGE PAGE -->
+  <section class="scene" id="message">
+    <div class="card">
+      <div class="flower">💌</div>
+      <div class="tiny-title">a tiny note</div>
+      <h2>Happy birthday</h2>
 
-<!-- LUDO -->
-<section class="scene" id="gamePage">
-  <div class="card">
-    <span class="flower-icon">🎲</span>
-    <div class="tiny-title">tiny ludo</div>
-    <h2>Birthday Ludo</h2>
+      <div class="note-box">
+        I hope today feels calm, kind, and beautiful —
+        the way small things sometimes become the most special ones.
+        <br><br>
+        Gëzuar ditëlindjen, dashuri. Të dua.
+      </div>
 
-    <p>Roll the dice, choose a glowing piece, and race to HOME.</p>
+      <button class="back-button" onclick="goHome()">Back to main page</button>
+    </div>
+  </section>
 
-    <div class="turn-box" id="turnBox">Player 1's turn 🏍️</div>
+  <!-- FLOWERS PAGE -->
+  <section class="scene" id="flowers">
+    <div class="card">
+      <div class="flower">❀</div>
+      <div class="tiny-title">lily of the valley</div>
+      <h2>Digital flowers</h2>
 
-    <div class="dice-wrap" onclick="rollLudoDice()">
+      <p>
+        Since I cannot give you real lily of the valley flowers today,
+        I made this small digital version instead.
+      </p>
+
+      <div class="mini-list">
+        <div class="mini-item">small white flowers</div>
+        <div class="mini-item">soft green leaves</div>
+        <div class="mini-item">a quiet pond</div>
+        <div class="mini-item">and a little birthday wish</div>
+      </div>
+
+      <button class="back-button" onclick="goHome()">Back to main page</button>
+    </div>
+  </section>
+
+  <!-- SONG PAGE -->
+  <section class="scene" id="songPage">
+    <div class="card">
+      <div class="flower">🎧</div>
+      <div class="tiny-title">the song</div>
+      <h2>Our song</h2>
+
+      <p>
+        I left the song here too, because it belongs in this little gift.
+      </p>
+
+      <button class="main-button" onclick="toggleMusic()" id="musicButton">
+        Play song
+      </button>
+
+      <br>
+
+      <button class="back-button" onclick="goHome()">Back to main page</button>
+    </div>
+  </section>
+
+  <!-- SOCK DRAWER PAGE -->
+  <section class="scene" id="sockDrawer">
+    <div class="card">
+      <div class="flower">🧦</div>
+      <div class="tiny-title">tiny drawer</div>
+      <h2>Open the sock drawer</h2>
+
+      <p>
+        Pick a pair. Obviously, normal socks were not invited.
+      </p>
+
+      <div class="drawer">
+        <div class="drawer-handle"></div>
+
+        <div class="sock-grid">
+          <button class="sock" onclick="sockMessage('striped')">🧦</button>
+          <button class="sock" onclick="sockMessage('star')">🌙</button>
+          <button class="sock" onclick="sockMessage('flower')">❀</button>
+          <button class="sock" onclick="sockMessage('chaos')">✨</button>
+          <button class="sock" onclick="sockMessage('lucky')">🍀</button>
+          <button class="sock" onclick="sockMessage('birthday')">🎁</button>
+        </div>
+      </div>
+
+      <div class="note-box game-message" id="sockNote"></div>
+
+      <button class="back-button" onclick="resetSockDrawer(); goHome()">Back to main page</button>
+    </div>
+  </section>
+
+  <!-- SNACK STOP PAGE -->
+  <section class="scene" id="snackStop">
+    <div class="card">
+      <div class="flower">🍴</div>
+      <div class="tiny-title">mountain snack stop</div>
+      <h2>Emergency snack break</h2>
+
+      <p>
+        Somewhere between the motorcycle ride and the flowers,
+        there had to be a snack stop.
+      </p>
+
+      <div class="picnic-box">
+        <p>
+          A tiny picnic box is waiting at the viewpoint.
+        </p>
+
+        <button class="main-button" onclick="openSnackBox()">
+          Open the picnic box
+        </button>
+
+        <div class="suxhuk-area" id="suxhukArea">
+          <div class="suxhuk" id="suxhuk">🌭</div>
+
+          <button class="small-button" onclick="cutSuxhuk()">
+            Cut with knife 🔪
+          </button>
+
+          <div class="suxhuk-slices" id="suxhukSlices">
+            🥓 🥓 🥓 🥓 🥓
+          </div>
+        </div>
+      </div>
+
+      <div class="note-box game-message" id="snackNote">
+        Suxhuk successfully unlocked.
+        <br><br>
+        Not edible, unfortunately. But it was prepared with full birthday seriousness.
+        <br><br>
+        Small reminder: I hope your year is full of good food, good days,
+        and people who remember the little things you like.
+      </div>
+
+      <button class="back-button" onclick="resetSnackStop(); goHome()">Back to main page</button>
+    </div>
+  </section>
+
+  <!-- LUDO GAME PAGE -->
+  <section class="scene" id="gamePage">
+    <div class="card">
+      <div class="flower">🎲</div>
+      <div class="tiny-title">tiny ludo</div>
+      <h2>Birthday Ludo</h2>
+
+      <p>
+        Roll the dice, choose a glowing piece, and move through the little cross board.
+      </p>
+
+      <div class="turn-box" id="turnBox">
+        Player 1's turn 🏍️
+      </div>
+
       <div class="dice" id="dice">🎲</div>
-      <div class="dice-tap" id="diceTap">tap to roll</div>
+
+      <button class="main-button" id="rollButton" onclick="rollLudoDice()">
+        Roll dice
+      </button>
+
+      <div class="ludo-cross" id="ludoBoard"></div>
+
+      <div class="note-box" id="ludoInfo">
+        Roll to start. You need a 6 to bring a piece onto the board.
+      </div>
+
+      <div class="note-box game-message" id="ludoWinMessage">
+        You won the tiny Ludo game 🤍
+        <br><br>
+        Gëzuar ditëlindjen, dashuri.
+        <br>
+        I hope this year brings you soft days, good surprises,
+        and many reasons to smile.
+      </div>
+
+      <button class="small-button" onclick="resetLudoGame()">Restart game</button>
+      <br>
+      <button class="back-button" onclick="resetLudoGame(); goHome();">
+        Back to main page
+      </button>
     </div>
+  </section>
 
-    <button class="btn-primary" id="rollButton" onclick="rollLudoDice()">Roll dice</button>
+  <script>
+    const song = document.getElementById("song");
+    const video = document.getElementById("birthdayVideo");
+    const menu = document.getElementById("menu");
+    const musicButton = document.getElementById("musicButton");
 
-    <div class="ludo-cross" id="ludoBoard"></div>
+    function showScene(sceneId) {
+      document.querySelectorAll(".scene").forEach(scene => {
+        scene.classList.remove("active");
+      });
 
-    <div class="note-box ludo-info" id="ludoInfo">Roll to start. You need a 6 to bring a piece onto the board.</div>
+      document.getElementById(sceneId).classList.add("active");
+    }
 
-    <div class="note-box game-msg" id="ludoWinMessage">
-      You won the tiny Ludo game 🤍<br><br>
-      Gëzuar ditëlindjen, dashuri.<br>
-      I hope this year brings you soft days, good surprises, and many reasons to smile.
-    </div>
+    function startExperience() {
+      menu.style.display = "grid";
 
-    <button class="btn-small" onclick="resetLudoGame()">Restart game</button>
+      song.volume = 0.55;
+      song.play()
+        .then(() => {
+          musicButton.textContent = "Pause song";
+        })
+        .catch(() => {
+          musicButton.textContent = "Play song";
+        });
+    }
 
-    <br>
+    function openVideo() {
+      showScene("videoScene");
 
-    <button class="btn-back" onclick="resetLudoGame();goHome()">Back to main</button>
-  </div>
-</section>
+      video.currentTime = 0;
+      video.play().catch(() => {
+        console.log("Video needs manual play.");
+      });
+    }
 
-<script>
-/* ── STATE ── */
-const S = {
-  song: document.getElementById('song'),
-  video: document.getElementById('birthdayVideo'),
-  musicPlaying: false,
-  currentScene: 'main',
-  snackStep: 0,
-  bloomedFlowers: new Set(),
-  ludoState: null
-};
+    function replayVideo() {
+      video.currentTime = 0;
+      video.play();
+    }
 
-/* ── NAVIGATION ── */
-function nav(id) {
-  const cur = document.getElementById(S.currentScene);
+    function goHome() {
+      video.pause();
+      showScene("main");
+    }
 
-  cur.classList.add('exit');
+    function toggleMusic() {
+      if (song.paused) {
+        song.play();
+        musicButton.textContent = "Pause song";
+      } else {
+        song.pause();
+        musicButton.textContent = "Play song";
+      }
+    }
 
-  setTimeout(() => {
-    cur.classList.remove('active','exit');
-  }, 500);
+    video.addEventListener("ended", () => {
+      showScene("message");
+    });
 
-  S.currentScene = id;
+    /* SOCK DRAWER LOGIC */
+    function sockMessage(type) {
+      const note = document.getElementById("sockNote");
 
-  const next = document.getElementById(id);
-  next.classList.add('active');
+      const messages = {
+        striped: "You picked the striped socks. Very serious birthday business.",
+        star: "You picked the moon socks. For dramatic walks and mysterious thoughts.",
+        flower: "You picked the flower socks. They match the lily of the valley part.",
+        chaos: "You picked the chaotic socks. Honestly, probably the correct choice.",
+        lucky: "You picked the lucky socks. Keeping these for a very good year.",
+        birthday: "You picked the birthday socks. Officially too cute to be normal."
+      };
 
-  if (id === 'flowers') revealFlowers();
-  if (id === 'message') revealNoteItems();
-}
+      note.innerHTML = messages[type] + "<br><br>Small reminder: you deserve soft days and good surprises.";
+      note.style.display = "block";
+    }
 
-function goHome() {
-  S.video.pause();
-  nav('main');
-}
+    function resetSockDrawer() {
+      document.getElementById("sockNote").style.display = "none";
+      document.getElementById("sockNote").innerHTML = "";
+    }
 
-/* ── START ── */
-function startExperience() {
-  document.getElementById('startBtn').style.display = 'none';
+    /* SUXHUK SNACK LOGIC */
+    function openSnackBox() {
+      document.getElementById("suxhukArea").style.display = "block";
+    }
 
-  const menu = document.getElementById('menu');
-  menu.style.display = 'grid';
+    function cutSuxhuk() {
+      document.getElementById("suxhuk").classList.add("cut");
+      document.getElementById("suxhukSlices").style.display = "block";
+      document.getElementById("snackNote").style.display = "block";
+    }
 
-  const sig = document.getElementById('sig');
-  sig.style.transition = 'opacity 0.5s ease 0.8s';
-  sig.style.opacity = '1';
+    function resetSnackStop() {
+      document.getElementById("suxhukArea").style.display = "none";
+      document.getElementById("suxhuk").classList.remove("cut");
+      document.getElementById("suxhukSlices").style.display = "none";
+      document.getElementById("snackNote").style.display = "none";
+    }
 
-  const btns = menu.querySelectorAll('.menu-btn');
-  btns.forEach((b, i) => {
-    setTimeout(() => b.classList.add('reveal'), 80 + i * 90);
-  });
+    /* LUDO GAME LOGIC - CROSS BOARD */
+    const crossPositions = [
+      [4,0], [4,1], [4,2], [4,3],
+      [3,4], [2,4], [1,4], [0,4],
+      [4,5], [4,6], [4,7], [4,8],
+      [5,4], [6,4], [7,4], [8,4],
+      [4,4]
+    ];
 
-  S.song.volume = 0.55;
+    const pathLength = crossPositions.length - 1;
 
-  S.song.play()
-    .then(() => {
-      S.musicPlaying = true;
-      updateMusicButton();
-      document.getElementById('musicViz').classList.add('playing');
-    })
-    .catch(() => {});
-}
+    let ludoCurrentPlayer = 1;
+    let ludoDiceValue = null;
+    let ludoHasRolled = false;
+    let ludoGameOver = false;
 
-/* ── VIDEO ── */
-function openVideo() {
-  nav('videoScene');
-  S.video.currentTime = 0;
-  S.video.play().catch(() => {});
-}
-
-function replayVideo() {
-  S.video.currentTime = 0;
-  S.video.play();
-}
-
-S.video.addEventListener('ended', () => nav('message'));
-
-/* ── MUSIC ── */
-function toggleMusic() {
-  if (S.song.paused) {
-    S.song.play();
-    S.musicPlaying = true;
-  } else {
-    S.song.pause();
-    S.musicPlaying = false;
-  }
-
-  updateMusicButton();
-}
-
-function updateMusicButton() {
-  const btn = document.getElementById('musicButton');
-  const viz = document.getElementById('musicViz');
-
-  if (S.musicPlaying) {
-    btn.textContent = 'Pause song';
-    viz.classList.add('playing');
-  } else {
-    btn.textContent = 'Play song';
-    viz.classList.remove('playing');
-  }
-}
-
-/* ── FLOWERS ── */
-const flowerData = [
-  {emoji:'🌸',name:'cherry blossom',msg:'Cherry blossom — fleeting and beautiful.'},
-  {emoji:'🌼',name:'daisy',msg:'Daisy — simple and cheerful, like a good day.'},
-  {emoji:'🌺',name:'hibiscus',msg:'Hibiscus — bold and warm, like you.'},
-  {emoji:'💐',name:'bouquet',msg:'A whole bouquet — because you deserve all of them.'},
-  {emoji:'🌷',name:'tulip',msg:'Tulip — an early spring hello.'},
-  {emoji:'🪷',name:'lotus',msg:'Lotus — calm and grounded, rising anyway.'}
-];
-
-function buildGarden() {
-  const g = document.getElementById('garden');
-  g.innerHTML = '';
-
-  flowerData.forEach((f, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'flower-btn';
-    btn.setAttribute('data-index', i);
-    btn.innerHTML = `${f.emoji}<span class="flower-label">${f.name}</span>`;
-    btn.onclick = () => bloomFlower(btn, i);
-    g.appendChild(btn);
-  });
-}
-
-function bloomFlower(btn, i) {
-  btn.classList.add('bloomed');
-
-  setTimeout(() => btn.classList.remove('bloomed'), 500);
-
-  S.bloomedFlowers.add(i);
-
-  spawnParticles(btn, ['✿','❀','🌿','·']);
-
-  const note = document.getElementById('flowerNote');
-  note.textContent = flowerData[i].msg;
-  note.classList.add('show');
-
-  if (S.bloomedFlowers.size === flowerData.length) {
-    setTimeout(() => {
-      note.textContent = 'You bloomed all of them 🤍 You found the whole garden.';
-    }, 400);
-  }
-}
-
-function revealFlowers() {
-  buildGarden();
-  S.bloomedFlowers.clear();
-  document.getElementById('flowerNote').classList.remove('show');
-}
-
-function revealNoteItems() {
-  document.querySelectorAll('.mini-item').forEach((el, i) => {
-    setTimeout(() => el.classList.add('reveal'), 100 + i * 120);
-  });
-}
-
-/* ── PARTICLES ── */
-function spawnParticles(el, chars) {
-  const rect = el.getBoundingClientRect();
-
-  for (let i = 0; i < 6; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.textContent = chars[Math.floor(Math.random() * chars.length)];
-    p.style.left = rect.left + rect.width / 2 + 'px';
-    p.style.top = rect.top + rect.height / 2 + 'px';
-
-    const angle = (Math.PI * 2 / 6) * i + Math.random() * 0.5;
-    const dist = 40 + Math.random() * 50;
-
-    p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
-    p.style.setProperty('--ty', Math.sin(angle) * dist - 20 + 'px');
-
-    document.body.appendChild(p);
-
-    setTimeout(() => p.remove(), 1200);
-  }
-}
-
-/* ── SOCK DRAWER ── */
-const sockMsgs = {
-  striped:'You picked the striped socks. Very serious birthday business.',
-  star:'You picked the moon socks. For dramatic walks and mysterious thoughts.',
-  flower:'You picked the flower socks. They match the lily of the valley part.',
-  chaos:'You picked the chaotic socks. Honestly, probably the correct choice.',
-  lucky:'You picked the lucky socks. Keeping these for a very good year.',
-  birthday:'You picked the birthday socks. Officially too cute to be normal.'
-};
-
-function sockMessage(btn, type) {
-  document.querySelectorAll('.sock-btn').forEach(b => b.classList.remove('picked'));
-
-  btn.classList.add('picked');
-
-  spawnParticles(btn, ['✨','🌟','·','✿']);
-
-  const note = document.getElementById('sockNote');
-  note.innerHTML = sockMsgs[type] + '<br><br>Small reminder: you deserve soft days and good surprises.';
-  note.classList.add('show');
-}
-
-function resetSockDrawer() {
-  document.getElementById('sockNote').classList.remove('show');
-  document.querySelectorAll('.sock-btn').forEach(b => b.classList.remove('picked'));
-}
-
-/* ── SNACK STOP ── */
-function openSnackBox() {
-  document.getElementById('suxhukArea').style.display = 'block';
-  document.getElementById('snackBoxBtn').style.display = 'none';
-  setSnackDot(1);
-}
-
-function cutSuxhuk() {
-  document.getElementById('suxhuk').classList.add('cut');
-  document.getElementById('cutBtn').style.display = 'none';
-
-  setTimeout(() => {
-    document.getElementById('suxhukSlices').style.display = 'block';
-    document.getElementById('snackNote').classList.add('show');
-    setSnackDot(2);
-  }, 400);
-}
-
-function setSnackDot(n) {
-  document.querySelectorAll('.dot').forEach((d, i) => {
-    d.classList.toggle('active', i <= n);
-  });
-}
-
-function resetSnackStop() {
-  document.getElementById('suxhukArea').style.display = 'none';
-  document.getElementById('suxhuk').classList.remove('cut');
-  document.getElementById('suxhukSlices').style.display = 'none';
-  document.getElementById('snackNote').classList.remove('show');
-  document.getElementById('snackBoxBtn').style.display = '';
-  document.getElementById('cutBtn').style.display = '';
-
-  document.querySelectorAll('.dot').forEach((d, i) => {
-    d.classList.toggle('active', i === 0);
-  });
-}
-
-/* ── LUDO ── */
-const CROSS = [
-  [4,0],[4,1],[4,2],[4,3],
-  [3,4],[2,4],[1,4],[0,4],
-  [4,5],[4,6],[4,7],[4,8],
-  [5,4],[6,4],[7,4],[8,4],
-  [4,4]
-];
-
-const PATH_LEN = CROSS.length - 1;
-
-function initLudoState() {
-  return {
-    player: 1,
-    diceVal: null,
-    rolled: false,
-    over: false,
-    pieces: {
-      1:[
-        {id:'p1a',player:1,pos:-1,done:false},
-        {id:'p1b',player:1,pos:-1,done:false}
+    let ludoPieces = {
+      1: [
+        { id: "p1a", player: 1, position: -1, finished: false },
+        { id: "p1b", player: 1, position: -1, finished: false }
       ],
-      2:[
-        {id:'p2a',player:2,pos:-1,done:false},
-        {id:'p2b',player:2,pos:-1,done:false}
+      2: [
+        { id: "p2a", player: 2, position: -1, finished: false },
+        { id: "p2b", player: 2, position: -1, finished: false }
       ]
-    }
-  };
-}
+    };
 
-function createBoard() {
-  const board = document.getElementById('ludoBoard');
-  board.innerHTML = '';
+    function createLudoBoard() {
+      const board = document.getElementById("ludoBoard");
+      board.innerHTML = "";
 
-  for (let r = 0; r < 9; r++) {
-    for (let c = 0; c < 9; c++) {
-      const cell = document.createElement('div');
-      cell.className = 'cross-cell empty';
-      cell.id = `g-${r}-${c}`;
-      board.appendChild(cell);
-    }
-  }
+      for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+          const cell = document.createElement("div");
+          cell.className = "cross-cell empty";
+          cell.id = `grid-${r}-${c}`;
+          board.appendChild(cell);
+        }
+      }
 
-  CROSS.forEach(([r,c], i) => {
-    const cell = document.getElementById(`g-${r}-${c}`);
+      crossPositions.forEach((pos, index) => {
+        const [r, c] = pos;
+        const cell = document.getElementById(`grid-${r}-${c}`);
 
-    cell.className = 'cross-cell' + (i === 0 ? ' start1' : i === 8 ? ' start2' : i === PATH_LEN ? ' center' : '');
-    cell.id = 'cell-' + i;
-    cell.textContent = i === PATH_LEN ? 'HOME' : i;
-  });
+        cell.className = "cross-cell";
+        cell.id = "cell-" + index;
 
-  renderPieces();
-}
+        if (index === 0) cell.classList.add("start1");
+        if (index === 8) cell.classList.add("start2");
+        if (index === pathLength) cell.classList.add("center");
 
-function renderPieces() {
-  const L = S.ludoState;
+        cell.textContent = index === pathLength ? "HOME" : index;
+      });
 
-  CROSS.forEach((_, i) => {
-    const cell = document.getElementById('cell-' + i);
-    if (!cell) return;
-    cell.innerHTML = i === PATH_LEN ? 'HOME' : i;
-  });
-
-  [...L.pieces[1], ...L.pieces[2]].forEach(piece => {
-    const btn = document.createElement('button');
-    btn.className = `ludo-piece p${piece.player}`;
-    btn.textContent = piece.player === 1 ? '🏍️' : '🌙';
-
-    const movable = canMove(piece);
-
-    if (movable) {
-      btn.classList.add('available');
-    } else {
-      btn.disabled = true;
+      renderLudoPieces();
     }
 
-    btn.onclick = () => movePiece(piece.id);
+    function renderLudoPieces() {
+      crossPositions.forEach((pos, index) => {
+        const cell = document.getElementById("cell-" + index);
+        if (!cell) return;
 
-    const idx = piece.pos === -1 ? (piece.player === 1 ? 0 : 8) : (piece.done ? PATH_LEN : piece.pos);
+        cell.innerHTML = index === pathLength ? "HOME" : index;
+      });
 
-    const cell = document.getElementById('cell-' + idx);
-    if (!cell) return;
+      const allPieces = [...ludoPieces[1], ...ludoPieces[2]];
 
-    let stack = cell.querySelector('.ludo-stack');
+      allPieces.forEach(piece => {
+        const pieceButton = document.createElement("button");
+        pieceButton.className = `ludo-piece p${piece.player}`;
+        pieceButton.textContent = piece.player === 1 ? "🏍️" : "🌙";
+        pieceButton.onclick = () => moveLudoPiece(piece.id);
 
-    if (!stack) {
-      stack = document.createElement('div');
-      stack.className = 'ludo-stack';
-      cell.innerHTML = '';
-      cell.appendChild(stack);
+        if (canMovePiece(piece)) {
+          pieceButton.classList.add("available");
+        } else {
+          pieceButton.disabled = true;
+        }
+
+        let targetCell;
+
+        if (piece.position === -1) {
+          targetCell = document.getElementById(piece.player === 1 ? "cell-0" : "cell-8");
+        } else if (piece.finished) {
+          targetCell = document.getElementById("cell-" + pathLength);
+        } else {
+          targetCell = document.getElementById("cell-" + piece.position);
+        }
+
+        let stack = targetCell.querySelector(".ludo-stack");
+
+        if (!stack) {
+          stack = document.createElement("div");
+          stack.className = "ludo-stack";
+          targetCell.innerHTML = "";
+          targetCell.appendChild(stack);
+        }
+
+        stack.appendChild(pieceButton);
+      });
     }
 
-    stack.appendChild(btn);
-  });
-}
+    function rollLudoDice() {
+      if (ludoGameOver) return;
 
-function canMove(piece) {
-  const L = S.ludoState;
+      if (ludoHasRolled) {
+        updateLudoInfo("Choose one of the glowing pieces to move.");
+        return;
+      }
 
-  if (!L.rolled || piece.player !== L.player || piece.done) return false;
+      ludoDiceValue = Math.floor(Math.random() * 6) + 1;
+      ludoHasRolled = true;
 
-  if (piece.pos === -1) return L.diceVal === 6;
+      document.getElementById("dice").textContent = "🎲 " + ludoDiceValue;
 
-  return piece.pos + L.diceVal <= PATH_LEN;
-}
+      const movablePieces = ludoPieces[ludoCurrentPlayer].filter(piece => canMovePiece(piece));
 
-function rollLudoDice() {
-  const L = S.ludoState;
+      if (movablePieces.length === 0) {
+        updateLudoInfo(`Player ${ludoCurrentPlayer} rolled ${ludoDiceValue}, but no piece can move.`);
 
-  if (L.over) return;
+        setTimeout(() => {
+          switchLudoTurn();
+        }, 1200);
+      } else {
+        updateLudoInfo(`Player ${ludoCurrentPlayer} rolled ${ludoDiceValue}. Choose a glowing piece.`);
+      }
 
-  if (L.rolled) {
-    setInfo('Choose a glowing piece.');
-    return;
-  }
-
-  L.diceVal = Math.floor(Math.random() * 6) + 1;
-  L.rolled = true;
-
-  const diceEl = document.getElementById('dice');
-  diceEl.classList.add('rolling');
-
-  setTimeout(() => diceEl.classList.remove('rolling'), 600);
-
-  diceEl.textContent = '🎲 ' + L.diceVal;
-
-  document.getElementById('diceTap').textContent = '';
-
-  const movable = L.pieces[L.player].filter(canMove);
-
-  if (movable.length === 0) {
-    setInfo(`Player ${L.player} rolled ${L.diceVal}, but no piece can move.`);
-    setTimeout(switchTurn, 1200);
-  } else {
-    setInfo(`Player ${L.player} rolled ${L.diceVal}. Choose a glowing piece.`);
-  }
-
-  renderPieces();
-}
-
-function movePiece(id) {
-  const L = S.ludoState;
-
-  if (!L.rolled || L.over) return;
-
-  const all = [...L.pieces[1], ...L.pieces[2]];
-  const piece = all.find(p => p.id === id);
-
-  if (!piece || !canMove(piece)) return;
-
-  if (piece.pos === -1 && L.diceVal === 6) {
-    piece.pos = piece.player === 1 ? 1 : 9;
-  } else {
-    piece.pos += L.diceVal;
-  }
-
-  if (piece.pos >= PATH_LEN) {
-    piece.pos = PATH_LEN;
-    piece.done = true;
-  }
-
-  checkWin();
-
-  if (!L.over) {
-    if (L.diceVal === 6) {
-      L.rolled = false;
-      L.diceVal = null;
-
-      document.getElementById('dice').textContent = '🎲';
-      document.getElementById('diceTap').textContent = 'tap to roll';
-
-      setInfo(`Player ${L.player} rolled a 6 — another turn!`);
-    } else {
-      switchTurn();
+      renderLudoPieces();
     }
-  }
 
-  renderPieces();
-}
+    function canMovePiece(piece) {
+      if (!ludoHasRolled || piece.player !== ludoCurrentPlayer || piece.finished) {
+        return false;
+      }
 
-function switchTurn() {
-  const L = S.ludoState;
+      if (piece.position === -1) {
+        return ludoDiceValue === 6;
+      }
 
-  L.player = L.player === 1 ? 2 : 1;
-  L.rolled = false;
-  L.diceVal = null;
+      return piece.position + ludoDiceValue <= pathLength;
+    }
 
-  document.getElementById('dice').textContent = '🎲';
-  document.getElementById('diceTap').textContent = 'tap to roll';
+    function moveLudoPiece(pieceId) {
+      if (!ludoHasRolled || ludoGameOver) return;
 
-  document.getElementById('turnBox').textContent =
-    L.player === 1 ? "Player 1's turn 🏍️" : "Player 2's turn 🌙";
+      const allPieces = [...ludoPieces[1], ...ludoPieces[2]];
+      const piece = allPieces.find(p => p.id === pieceId);
 
-  setInfo(`Player ${L.player}, roll the dice.`);
+      if (!piece || !canMovePiece(piece)) return;
 
-  renderPieces();
-}
+      if (piece.position === -1 && ludoDiceValue === 6) {
+        piece.position = piece.player === 1 ? 1 : 9;
+      } else {
+        piece.position += ludoDiceValue;
+      }
 
-function checkWin() {
-  const L = S.ludoState;
+      if (piece.position >= pathLength) {
+        piece.position = pathLength;
+        piece.finished = true;
+      }
 
-  if (L.pieces[L.player].every(p => p.done)) {
-    L.over = true;
+      checkLudoWinner();
 
-    document.getElementById('turnBox').textContent =
-      L.player === 1 ? 'Player 1 won! 🏍️' : 'Player 2 won! 🌙';
+      if (!ludoGameOver) {
+        if (ludoDiceValue === 6) {
+          ludoHasRolled = false;
+          ludoDiceValue = null;
+          document.getElementById("dice").textContent = "🎲";
+          updateLudoInfo(`Player ${ludoCurrentPlayer} rolled a 6, so they get another turn.`);
+        } else {
+          switchLudoTurn();
+        }
+      }
 
-    document.getElementById('ludoInfo').style.display = 'none';
+      renderLudoPieces();
+    }
 
-    const win = document.getElementById('ludoWinMessage');
-    win.classList.add('show');
+    function switchLudoTurn() {
+      ludoCurrentPlayer = ludoCurrentPlayer === 1 ? 2 : 1;
+      ludoHasRolled = false;
+      ludoDiceValue = null;
 
-    spawnParticles(win, ['🤍','✨','❀','🌟']);
-  }
-}
+      document.getElementById("dice").textContent = "🎲";
+      document.getElementById("turnBox").textContent =
+        ludoCurrentPlayer === 1 ? "Player 1's turn 🏍️" : "Player 2's turn 🌙";
 
-function setInfo(txt) {
-  const el = document.getElementById('ludoInfo');
-  el.style.display = 'block';
-  el.textContent = txt;
-}
+      updateLudoInfo(`Player ${ludoCurrentPlayer}, roll the dice.`);
+      renderLudoPieces();
+    }
 
-function resetLudoGame() {
-  S.ludoState = initLudoState();
+    function checkLudoWinner() {
+      const hasWon = ludoPieces[ludoCurrentPlayer].every(piece => piece.finished);
 
-  document.getElementById('dice').textContent = '🎲';
-  document.getElementById('diceTap').textContent = 'tap to roll';
-  document.getElementById('turnBox').textContent = "Player 1's turn 🏍️";
-  document.getElementById('ludoWinMessage').classList.remove('show');
+      if (hasWon) {
+        ludoGameOver = true;
 
-  setInfo('Roll to start. You need a 6 to bring a piece onto the board.');
+        document.getElementById("turnBox").textContent =
+          ludoCurrentPlayer === 1 ? "Player 1 won 🏍️" : "Player 2 won 🌙";
 
-  createBoard();
-}
+        document.getElementById("ludoInfo").style.display = "none";
+        document.getElementById("ludoWinMessage").style.display = "block";
+      }
+    }
 
-/* ── INIT ── */
-S.ludoState = initLudoState();
-createBoard();
-buildGarden();
-</script>
+    function updateLudoInfo(text) {
+      const info = document.getElementById("ludoInfo");
+      info.style.display = "block";
+      info.textContent = text;
+    }
+
+    function resetLudoGame() {
+      ludoCurrentPlayer = 1;
+      ludoDiceValue = null;
+      ludoHasRolled = false;
+      ludoGameOver = false;
+
+      ludoPieces = {
+        1: [
+          { id: "p1a", player: 1, position: -1, finished: false },
+          { id: "p1b", player: 1, position: -1, finished: false }
+        ],
+        2: [
+          { id: "p2a", player: 2, position: -1, finished: false },
+          { id: "p2b", player: 2, position: -1, finished: false }
+        ]
+      };
+
+      document.getElementById("dice").textContent = "🎲";
+      document.getElementById("turnBox").textContent = "Player 1's turn 🏍️";
+      document.getElementById("ludoWinMessage").style.display = "none";
+      updateLudoInfo("Roll to start. You need a 6 to bring a piece onto the board.");
+
+      createLudoBoard();
+    }
+
+    createLudoBoard();
+  </script>
 </body>
 </html>
